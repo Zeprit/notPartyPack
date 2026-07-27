@@ -39,7 +39,7 @@ if (spawnPlayer > 0){
 			if (instance_exists(oOtherPlayer)){
 				with(oOtherPlayer){
 					if (myID == _nr){
-						x = photon_realtime_player_properties_get_remote_i32(_nr, "xx");
+						xxTo = photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 					}
 				}
 			}
@@ -67,6 +67,7 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 	
 		var _playerSpawn = instance_create_depth(_x,_y,0,oOtherPlayer)
 			_playerSpawn.myID = _myID;
+			_playerSpawn.xxTo = _x;
 	}
 
 	buffer_delete(recv)
