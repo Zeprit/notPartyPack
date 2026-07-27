@@ -1,8 +1,35 @@
+if (isPlayer){
+	pressRight =	(keyboard_check(vk_right)) or (keyboard_check(ord("D")));
+	pressLeft =		(keyboard_check(vk_left)) or (keyboard_check(ord("A")));
+	pressSpace =	(keyboard_check(vk_space));
+}
+
+#macro RIGHT pressRight
+#macro LEFT pressLeft
+#macro SPACE pressSpace
+
+#region effects
+slowSin += .015;
+
+if (canSwitchAngleDir > 0){ canSwitchAngleDir--; }
+#endregion
+
+#region movement
 var _spdInc = 0.5;
-if (keyboard_check(vk_right)){
-	if (cSpd < maxSpd){ cSpd += _spdInc; }
-}else if (keyboard_check(vk_left)){
-	if (cSpd > -maxSpd){ cSpd -= _spdInc; }
+var _walkRight = false, _walkLeft = false;
+var _spdDivide = 1;
+if (RIGHT) && !(LEFT){
+	if (angleDir == -1){ _spdDivide = 3; }	//go slower when we are actually moving the other way
+	if (cSpd < (maxSpd/_spdDivide)){ cSpd += _spdInc; }
+	else if (cSpd >= (maxSpd/_spdDivide)+_spdInc){ cSpd -= _spdInc; }
+	_walkRight = true;
+	
+}else if (LEFT) && !(RIGHT){
+	if (angleDir == 1){ _spdDivide = 3; }
+	if (cSpd > -(maxSpd/_spdDivide)){ cSpd -= _spdInc; }
+	else if (cSpd < -(maxSpd/_spdDivide)-_spdInc){ cSpd += _spdInc; }
+	_walkLeft = true;
+	
 }else{
 	if (cSpd > _spdInc){ cSpd -= _spdInc; }
 	else if (cSpd < -_spdInc){ cSpd += _spdInc; }
@@ -11,4 +38,123 @@ if (keyboard_check(vk_right)){
 	}
 }
 
-x += cSpd;
+if (isPlayer){
+	x += cSpd;
+}else{
+	x += (xxTo - x) * 0.5;
+}
+
+if (_walkRight) or (_walkLeft){
+	slowSin += .015;
+	legIndex += 0.3 + ((1/_spdDivide)*0.7);
+}else{
+	if !(((legIndex % sprite_get_number(sPlayer)) <= 1) && ((legIndex % sprite_get_number(sPlayer)) >= 0))
+	&& !(((legIndex % sprite_get_number(sPlayer)) <= 31) && ((legIndex % sprite_get_number(sPlayer)) >= 30)){
+		legIndex++;
+	}
+}
+#endregion
+
+#region angle
+bodyAngle = sin(slowSin)*2;		//breathing effect for body.
+
+if (isPlayer){
+	
+	if (_walkRight) && (angleDir == -1) && (canSwitchAngleDir <= 0){
+		if (neckSpd > -12){
+			neckSpd -= 0.2;
+		
+			if (neckSpd < -6){
+				neckSpd -= 0.3;
+			}
+			if (headAngle > 320){
+				neckSpd -= 0.4;
+			}
+		}
+		if (neckAngle < 15){
+			neckAngle -= neckSpd/50;
+			if (neckAngle < 0){
+				neckAngle -= neckSpd/25;
+			}
+		}
+		if (anglePullDown > 0){ anglePullDown -= 0.5; }
+	
+	}else if (_walkLeft) && (angleDir == 1) && (canSwitchAngleDir <= 0){
+		if (neckSpd < 12){
+			neckSpd += 0.2;
+		
+			if (neckSpd > 6){
+				neckSpd += 0.3;
+			}
+			if (headAngle < 40){
+				neckSpd += 0.4;
+			}
+		}
+	
+		if (neckAngle > -15){
+			neckAngle -= neckSpd/50;
+			if (neckAngle > 0){
+				neckAngle -= neckSpd/25;
+			}
+		}
+		if (anglePullDown > 0){ anglePullDown -= 0.5; }
+	
+	}else{
+		if (neckAngle > 0.3){ neckAngle -= 0.25; }
+		else if (neckAngle < -0.3){ neckAngle += 0.25; }
+	
+		if (neckSpd > 0.4){ neckSpd -= 0.5; }
+		else if (neckSpd < -0.4){ neckSpd += 0.5; }
+		else{ neckSpd = 0; }
+	
+		if (anglePullDown < 5) && (angleCanPullDown <= 0){ anglePullDown += 0.5; }
+		else{
+			if (anglePullDown > 0){
+				anglePullDown -= 0.5;
+			}
+		}
+	
+		if (angleCanPullDown > 0){ angleCanPullDown--; }
+	}
+
+	if (headAngle > 40) && (headAngle < 320) && (angleCanPullDown > 0){ angleCanPullDown--; }
+
+
+	headAngle += neckSpd;
+
+	if (angleDir == 1){
+		if (headAngle > 20){ headAngle -= (anglePullDown + (neckSpd/1.5)); }
+		else if (angleCanPullDown <= 0){ neckSpd = 0; angleCanPullDown = 20; }
+	
+		if (headAngle > 175) && (canSwitchAngleDir <= 0){
+			angleDir = -1;
+			canSwitchAngleDir = 22;
+		}
+	}else if (angleDir == -1){
+		if (headAngle < 340){ headAngle -= (-anglePullDown + (neckSpd/1.5)); }
+		else if (angleCanPullDown <= 0){ neckSpd = 0; angleCanPullDown = 20; }
+	
+		if (headAngle < 185) && (canSwitchAngleDir <= 0){
+			angleDir = 1;
+			canSwitchAngleDir = 22;
+		}
+	}
+
+}
+
+#endregion
+
+if (SPACE){
+	if (headIndex > 39){ headIndex = 0; }
+	else if (headIndex >= 39){ headIndex = 6; }
+	
+	headIndex++;
+}else{
+	if (headIndex < 4){ headIndex = 0; }
+	else{ headIndex++; }
+	if (headIndex >= 4) && (headIndex < 40){ headIndex = 40; }
+	if (headIndex >= 44){ headIndex = 0; }
+}
+
+//if (keyboard_check_pressed(ord("L"))){ room_speed = 5; }
+//if (keyboard_check_pressed(ord("K"))){ room_speed = 60; }

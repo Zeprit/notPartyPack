@@ -8,8 +8,8 @@ if (spawnPlayer > 0){
 			
 			var _nr = photon_realtime_get_player_number_by_index(i);
 			if (_nr != photon_realtime_get_local_player_number()){
-				var _newPlayer = instance_create_depth(x, 480,0,oOtherPlayer);
-					_newPlayer.myID = _nr
+				var _newPlayer = instance_create_depth(x, 480,0,oPlayer);
+					_newPlayer.myID = _nr;
 					_newPlayer.x = photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 			}
 		}
@@ -22,7 +22,8 @@ if (spawnPlayer > 0){
 		buffer_write(b, buffer_u16, 480);
 		buffer_write(b, buffer_u16, photon_realtime_get_local_player_number());
 	
-		instance_create_depth(photon_realtime_player_properties_get_local_i32("xx"), 480,0,oPlayer)
+		var _realPlayer =  instance_create_depth(photon_realtime_player_properties_get_local_i32("xx"), 480,0,oPlayer);
+			_realPlayer.isPlayer = true;
 		show_debug_message("spawning player at "+string(photon_realtime_player_properties_get_local_i32("xx")));
 	
 		photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
@@ -36,18 +37,30 @@ if (spawnPlayer > 0){
 		for (var i = 0; i < _count; i++) {
 			
 			var _nr = photon_realtime_get_player_number_by_index(i);
-			if (instance_exists(oOtherPlayer)){
-				with(oOtherPlayer){
-					if (myID == _nr){
-						xxTo = photon_realtime_player_properties_get_remote_i32(_nr, "xx");
+			if (instance_exists(oPlayer)){
+				with(oPlayer){
+					if !(isPlayer) && (myID == _nr){
+						xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
+						headAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "headAngle");
+						neckAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "neckAngle");
+						pressSpace =	photon_realtime_player_properties_get_remote_i32(_nr, "pressSpace");
+						pressLeft =		photon_realtime_player_properties_get_remote_i32(_nr, "pressLeft");
+						pressRight =	photon_realtime_player_properties_get_remote_i32(_nr, "pressRight");
 					}
 				}
 			}
 		}
 	if (instance_exists(oPlayer)){
-
-			//show_debug_message("changing xx..");
-			photon_realtime_player_properties_set_local_i32("xx", oPlayer.x);
+		with(oPlayer){
+			if (isPlayer){
+				photon_realtime_player_properties_set_local_i32("xx", oPlayer.x);
+				photon_realtime_player_properties_set_local_i32("headAngle", oPlayer.headAngle);
+				photon_realtime_player_properties_set_local_i32("neckAngle", oPlayer.neckAngle);
+				photon_realtime_player_properties_set_local_i32("pressSpace", oPlayer.pressSpace);
+				photon_realtime_player_properties_set_local_i32("pressLeft", oPlayer.pressLeft);
+				photon_realtime_player_properties_set_local_i32("pressRight", oPlayer.pressRight);
+			}
+		}
 	}
 }
 
@@ -65,9 +78,10 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 	    var _y = buffer_read(recv, buffer_u16);
 		var _myID = buffer_read(recv, buffer_u16);
 	
-		var _playerSpawn = instance_create_depth(_x,_y,0,oOtherPlayer)
+		var _playerSpawn = instance_create_depth(_x,_y,0,oPlayer)
 			_playerSpawn.myID = _myID;
 			_playerSpawn.xxTo = _x;
+			_playerSpawn.isPlayer = false;
 	}
 
 	buffer_delete(recv)

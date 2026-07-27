@@ -89,6 +89,8 @@
     {"id":{"name":"GMMobileUtilsMicrophone_API","path":"scripts/GMMobileUtilsMicrophone_API/GMMobileUtilsMicrophone_API.yy",},},
     {"id":{"name":"GMPhoton_API","path":"scripts/GMPhoton_API/GMPhoton_API.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
+    {"id":{"name":"sPlayerHead","path":"sprites/sPlayerHead/sPlayerHead.yy",},},
+    {"id":{"name":"sPlayerNeck","path":"sprites/sPlayerNeck/sPlayerNeck.yy",},},
     {"id":{"name":"spr_gm_background","path":"sprites/spr_gm_background/spr_gm_background.yy",},},
     {"id":{"name":"spr_gm_button","path":"sprites/spr_gm_button/spr_gm_button.yy",},},
     {"id":{"name":"spr_gm_textbox","path":"sprites/spr_gm_textbox/spr_gm_textbox.yy",},},
