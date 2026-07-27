@@ -11,6 +11,7 @@ if (spawnPlayer > 0){
 				var _newPlayer = instance_create_depth(x, 480,0,oPlayer);
 					_newPlayer.myID = _nr;
 					_newPlayer.x = photon_realtime_player_properties_get_remote_i32(_nr, "xx");
+					_newPlayer.isPlayer = false;
 			}
 		}
 		
@@ -22,8 +23,9 @@ if (spawnPlayer > 0){
 		buffer_write(b, buffer_u16, 480);
 		buffer_write(b, buffer_u16, photon_realtime_get_local_player_number());
 	
-		var _realPlayer =  instance_create_depth(photon_realtime_player_properties_get_local_i32("xx"), 480,0,oPlayer);
+		var _realPlayer =  instance_create_depth(photon_realtime_player_properties_get_local_i32("xx"), 480, 0, oPlayer);
 			_realPlayer.isPlayer = true;
+			_realPlayer.myID = photon_realtime_get_local_player_number();
 		show_debug_message("spawning player at "+string(photon_realtime_player_properties_get_local_i32("xx")));
 	
 		photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
@@ -34,9 +36,10 @@ if (spawnPlayer > 0){
 	}
 }else{
 	var _count = photon_realtime_get_player_count();
-		for (var i = 0; i < _count; i++) {
+	for (var i = 0; i < _count; i++) {
 			
-			var _nr = photon_realtime_get_player_number_by_index(i);
+		var _nr = photon_realtime_get_player_number_by_index(i);
+		if (_nr != photon_realtime_get_local_player_number()){
 			if (instance_exists(oPlayer)){
 				with(oPlayer){
 					if !(isPlayer) && (myID == _nr){
@@ -46,10 +49,12 @@ if (spawnPlayer > 0){
 						pressSpace =	photon_realtime_player_properties_get_remote_i32(_nr, "pressSpace");
 						pressLeft =		photon_realtime_player_properties_get_remote_i32(_nr, "pressLeft");
 						pressRight =	photon_realtime_player_properties_get_remote_i32(_nr, "pressRight");
+						angleDir =		photon_realtime_player_properties_get_remote_i32(_nr, "angleDir");
 					}
 				}
 			}
 		}
+	}
 	if (instance_exists(oPlayer)){
 		with(oPlayer){
 			if (isPlayer){
@@ -59,6 +64,7 @@ if (spawnPlayer > 0){
 				photon_realtime_player_properties_set_local_i32("pressSpace", oPlayer.pressSpace);
 				photon_realtime_player_properties_set_local_i32("pressLeft", oPlayer.pressLeft);
 				photon_realtime_player_properties_set_local_i32("pressRight", oPlayer.pressRight);
+				photon_realtime_player_properties_set_local_i32("angleDir", oPlayer.angleDir);
 			}
 		}
 	}

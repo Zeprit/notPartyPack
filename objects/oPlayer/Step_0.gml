@@ -58,7 +58,8 @@ if (_walkRight) or (_walkLeft){
 #region angle
 bodyAngle = sin(slowSin)*2;		//breathing effect for body.
 
-if (isPlayer){
+var _isPlayer = isPlayer;
+if (_isPlayer){
 	
 	if (_walkRight) && (angleDir == -1) && (canSwitchAngleDir <= 0){
 		if (neckSpd > -12){
