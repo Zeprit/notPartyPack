@@ -1,0 +1,24 @@
+{
+  "$GMExtensionConfigSet": "GMExtensionConfigSet",
+  "configurables": {
+    "3a40c2f1-1f40-4468-ae31-18342ed874c2": null,
+    "95430a3f-f422-486b-84bb-93dc05ba7e39": null,
+    "4f78719c-3630-4ae4-8d2d-b294e6b73c4c": null,
+    "d7cee8f3-45f7-4fb2-80b4-ea2e83ab3f09": null,
+    "6c847f97-9bb3-4a38-ba9f-ab9e48d358ea": null,
+    "8135235e-d010-47d0-bca4-3b74441b6f33": null,
+    "96bb3476-d350-47ae-9464-4258a8accfde": null,
+    "146f77f4-3c49-4dd1-8823-e34ab9ac70e1": {
+      "Default": {
+        "value": "07312893-0024-4828-8f46-7aef78ed7f77"
+      }
+    },
+    "13dc7b94-4c31-4be5-a18d-26e2a8e859a5": null,
+    "fcfcd837-0cac-4f2a-a71a-9f980f43915d": null,
+    "7cd043a4-19e4-42f5-ba05-cc0940de0e99": null,
+    "571b2ff5-0bbf-4d67-85d1-ffbfb53e7fc5": null,
+    "9df4a91d-6a44-41fa-8e13-18bfe41bd5b9": null,
+    "d53c948a-4124-4910-a827-44270e376052": null,
+    "bb696e86-3f2b-4115-915e-965950ad2b1a": null
+  }
+}

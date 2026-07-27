@@ -1,0 +1,24 @@
+{
+  "FolderOrderSettings":[
+    {"name":"GM Extensions Assets","order":1,"path":"folders/GM Extensions Assets.yy",},
+    {"name":"MobileUtils","order":2,"path":"folders/MobileUtils.yy",},
+    {"name":"Photon Demo","order":3,"path":"folders/Photon Demo.yy",},
+    {"name":"Photon","order":4,"path":"folders/Photon.yy",},
+  ],
+  "ResourceOrderSettings":[
+    {"name":"obj_photon_room_im_ready","order":2,"path":"objects/obj_photon_room_im_ready/obj_photon_room_im_ready.yy",},
+    {"name":"obj_photon_room_leave","order":1,"path":"objects/obj_photon_room_leave/obj_photon_room_leave.yy",},
+    {"name":"obj_photon_room_points_controller","order":3,"path":"objects/obj_photon_room_points_controller/obj_photon_room_points_controller.yy",},
+    {"name":"obj_photon_room_points_point","order":5,"path":"objects/obj_photon_room_points_point/obj_photon_room_points_point.yy",},
+    {"name":"obj_photon_room_send_string","order":4,"path":"objects/obj_photon_room_send_string/obj_photon_room_send_string.yy",},
+    {"name":"obj_photon_room_voice","order":6,"path":"objects/obj_photon_room_voice/obj_photon_room_voice.yy",},
+    {"name":"oControl","order":7,"path":"objects/oControl/oControl.yy",},
+    {"name":"oOtherPlayer","order":11,"path":"objects/oOtherPlayer/oOtherPlayer.yy",},
+    {"name":"oPhotonInit","order":6,"path":"objects/oPhotonInit/oPhotonInit.yy",},
+    {"name":"oPlayer","order":10,"path":"objects/oPlayer/oPlayer.yy",},
+    {"name":"oStart","order":5,"path":"objects/oStart/oStart.yy",},
+    {"name":"rmLevel","order":9,"path":"rooms/rmLevel/rmLevel.yy",},
+    {"name":"rmStart","order":8,"path":"rooms/rmStart/rmStart.yy",},
+    {"name":"sPlayer","order":12,"path":"sprites/sPlayer/sPlayer.yy",},
+  ],
+}
