@@ -95,8 +95,8 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"rm_photon_realtime_init","path":"rooms/rm_photon_realtime_init/rm_photon_realtime_init.yy",},},
     {"roomId":{"name":"rmStart","path":"rooms/rmStart/rmStart.yy",},},
+    {"roomId":{"name":"rm_photon_realtime_init","path":"rooms/rm_photon_realtime_init/rm_photon_realtime_init.yy",},},
     {"roomId":{"name":"rmLevel","path":"rooms/rmLevel/rmLevel.yy",},},
     {"roomId":{"name":"rm_photon","path":"rooms/rm_photon/rm_photon.yy",},},
     {"roomId":{"name":"rm_photon_realtime_matchmaking","path":"rooms/rm_photon_realtime_matchmaking/rm_photon_realtime_matchmaking.yy",},},
