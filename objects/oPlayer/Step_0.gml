@@ -4,6 +4,8 @@ if (isPlayer){
 	pressSpace =	(keyboard_check(vk_space));
 }
 
+audio_emitter_position(myEmitter, x, y, 0);
+
 #macro RIGHT pressRight
 #macro LEFT pressLeft
 #macro SPACE pressSpace
@@ -150,11 +152,29 @@ if (SPACE){
 	else if (headIndex >= 39){ headIndex = 6; }
 	
 	headIndex++;
+	
+	if (mySound == -1) or !(audio_is_playing(mySound)){
+		mySound = audio_play_sound_on(myEmitter, sfxLoop, true, 1);
+		audio_sound_gain(mySound, 0, 0);
+	}
+	if (mySoundGain < 0.5){ mySoundGain += 0.1; }
+	if (mySoundGain < 1){ mySoundGain += 0.0025; }
+	
+	
+	
 }else{
 	if (headIndex < 4){ headIndex = 0; }
 	else{ headIndex++; }
 	if (headIndex >= 4) && (headIndex < 40){ headIndex = 40; }
 	if (headIndex >= 44){ headIndex = 0; }
+	
+	if (mySoundGain > 0){ mySoundGain -= 0.05; }
+	else{mySoundGain = 0; }
+}
+
+if (mySound != -1) && (audio_is_playing(mySound)){
+	audio_sound_gain(mySound, mySoundGain, 0);
+	audio_sound_pitch(mySound, 1 + (neckAngle/20));
 }
 
 //if (keyboard_check_pressed(ord("L"))){ room_speed = 5; }

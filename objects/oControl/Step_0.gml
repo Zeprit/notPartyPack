@@ -1,4 +1,7 @@
 
+audio_listener_position(room_width/2, HEIGHT/2, 0);
+audio_listener_orientation(0, 1, 0, 0, 0, 1);
+
 if (spawnPlayer > 0){
 	spawnPlayer--;
 	if (spawnPlayer == 1){
@@ -58,13 +61,13 @@ if (spawnPlayer > 0){
 	if (instance_exists(oPlayer)){
 		with(oPlayer){
 			if (isPlayer){
-				photon_realtime_player_properties_set_local_i32("xx", oPlayer.x);
-				photon_realtime_player_properties_set_local_i32("headAngle", oPlayer.headAngle);
-				photon_realtime_player_properties_set_local_i32("neckAngle", oPlayer.neckAngle);
-				photon_realtime_player_properties_set_local_i32("pressSpace", oPlayer.pressSpace);
-				photon_realtime_player_properties_set_local_i32("pressLeft", oPlayer.pressLeft);
-				photon_realtime_player_properties_set_local_i32("pressRight", oPlayer.pressRight);
-				photon_realtime_player_properties_set_local_i32("angleDir", oPlayer.angleDir);
+				photon_realtime_player_properties_set_local_i32("xx", x);
+				photon_realtime_player_properties_set_local_i32("headAngle", headAngle);
+				photon_realtime_player_properties_set_local_i32("neckAngle", neckAngle);
+				photon_realtime_player_properties_set_local_i32("pressSpace", pressSpace);
+				photon_realtime_player_properties_set_local_i32("pressLeft", pressLeft);
+				photon_realtime_player_properties_set_local_i32("pressRight", pressRight);
+				photon_realtime_player_properties_set_local_i32("angleDir", angleDir);
 			}
 		}
 	}

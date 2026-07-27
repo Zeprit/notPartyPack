@@ -20,6 +20,7 @@
     {"name":"oStart","order":5,"path":"objects/oStart/oStart.yy",},
     {"name":"rmLevel","order":9,"path":"rooms/rmLevel/rmLevel.yy",},
     {"name":"rmStart","order":8,"path":"rooms/rmStart/rmStart.yy",},
+    {"name":"sfxLoop","order":15,"path":"sounds/sfxLoop/sfxLoop.yy",},
     {"name":"sPlayer","order":1,"path":"sprites/sPlayer/sPlayer.yy",},
     {"name":"sPlayerHead","order":3,"path":"sprites/sPlayerHead/sPlayerHead.yy",},
     {"name":"sPlayerNeck","order":2,"path":"sprites/sPlayerNeck/sPlayerNeck.yy",},

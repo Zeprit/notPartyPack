@@ -2,7 +2,7 @@ cSpd = 0;
 maxSpd = 3;
 myID = -1;
 
-isPlayer = false;
+
 
 slowSin = 0;
 
@@ -26,4 +26,10 @@ pressLeft = 0;
 pressSpace = 0;
 
 //other player:
+isPlayer = false;
 xxTo = x;
+
+
+myEmitter = audio_emitter_create();
+mySound = -1;
+mySoundGain = 0;

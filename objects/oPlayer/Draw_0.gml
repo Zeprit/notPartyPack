@@ -9,4 +9,4 @@ draw_sprite_ext(sPlayerHead, headIndex,	x + lengthdir_x(128, bodyAngle+90) + len
 
 
 //draw_text(x, y-280, $"neckAngle: {neckAngle}, headAngle: {neckAngle}, neckSpd: {neckSpd}, pullDown: {anglePullDown}");
-draw_text(x, y-280, $"myID: {myID}");
+draw_text(x, y-280, $"myID: {myID}, isPlayer: {isPlayer}");

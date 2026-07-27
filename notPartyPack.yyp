@@ -88,6 +88,7 @@
     {"id":{"name":"ExtensionCore_api","path":"scripts/ExtensionCore_api/ExtensionCore_api.yy",},},
     {"id":{"name":"GMMobileUtilsMicrophone_API","path":"scripts/GMMobileUtilsMicrophone_API/GMMobileUtilsMicrophone_API.yy",},},
     {"id":{"name":"GMPhoton_API","path":"scripts/GMPhoton_API/GMPhoton_API.yy",},},
+    {"id":{"name":"sfxLoop","path":"sounds/sfxLoop/sfxLoop.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
     {"id":{"name":"sPlayerHead","path":"sprites/sPlayerHead/sPlayerHead.yy",},},
     {"id":{"name":"sPlayerNeck","path":"sprites/sPlayerNeck/sPlayerNeck.yy",},},
