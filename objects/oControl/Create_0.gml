@@ -18,7 +18,7 @@ photon_realtime_set_callback_available_regions(function(_regions, _servers) {
 
 photon_realtime_set_callback_disconnected(function() {
     show_debug_message("on disconnected");
-    room_goto(rm_photon_realtime_init);
+    room_goto(rmStart);
 });
 
 photon_realtime_set_callback_connection_error(function(_code) {
@@ -50,12 +50,19 @@ photon_realtime_set_callback_join_room_event(function(_joining_player_number, _p
     );
 });
 
-photon_realtime_set_callback_leave_room_event(function(_player_number, _is_inactive) {
+photon_realtime_set_callback_leave_room_event(function(_playerNumber, _is_inactive) {
     show_debug_message(
         "on leave_room_event: " +
-        "player=" + string(_player_number) +
+        "player=" + string(_playerNumber) +
         ", inactive=" + string(_is_inactive)
     );
+	if (instance_exists(oPlayer)){
+		with(oPlayer){
+			if (myID == _playerNumber){
+				instance_destroy();
+			}
+		}
+	}
 });
 
 photon_realtime_set_callback_custom_event(function(_player_number, _event_code, _payload) {
@@ -100,53 +107,64 @@ function func_updated_player()
 
     var all_ready = true;
 
-    for (var i = 1; i <= count; i++)
-    {
+    for (var i = 1; i <= count; i++){
         var ready;
 
-        if (i == me)
-        {
+        if (i == me){
             ready = photon_realtime_player_properties_get_local_bool("ready");
         }
-        else
-        {
+        else{
             ready = photon_realtime_player_properties_get_remote_bool(i, "ready");
         }
 
-        if (!ready)
-        {
+        if !(ready){
             all_ready = false;
             break;
         }
     }
 
-    if (all_ready)
-    {
+    if (all_ready){
         show_debug_message("game_state: playing");
         photon_realtime_room_properties_set_string("game_state", "playing");
         func_updated_room("playing");
-    }
-    else
-    {
+    }else{
         show_debug_message("game_state: waiting");
         photon_realtime_room_properties_set_string("game_state", "waiting");
         func_updated_room("waiting");
     }
 }
 
-photon_realtime_set_callback_player_properties_change(function(_player_number, properties) {
+photon_realtime_set_callback_player_properties_change(function(_playerNumber, properties) {
     show_debug_message(
         "on player_properties_change: player=" +
-        string(_player_number) +
+        string(_playerNumber) +
         ", properties=" +
         string(properties)
     );
 
-    if (variable_struct_exists(properties, "ready"))
-    {
+    if (variable_struct_exists(properties, "ready")){
         // We should update locally, because if we update it ourselves we don't receive the callback.
         func_updated_player();
     }
+	
+
+	if (_playerNumber != photon_realtime_get_local_player_number()){
+		if (instance_exists(oPlayer)){
+			with(oPlayer){
+				if !(isPlayer) && (myID == _playerNumber){
+					if (variable_struct_exists(properties, "xx")){			xxTo =			photon_realtime_player_properties_get_remote_i32(_playerNumber, "xx"); }
+					if (variable_struct_exists(properties, "headAngle")){	headAngle =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "headAngle"); }
+					if (variable_struct_exists(properties, "neckAngle")){	neckAngle =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "neckAngle"); }
+					if (variable_struct_exists(properties, "pressSpace")){	pressSpace =	photon_realtime_player_properties_get_remote_i32(_playerNumber, "pressSpace"); }
+					if (variable_struct_exists(properties, "pressLeft")){	pressLeft =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "pressLeft"); }
+					if (variable_struct_exists(properties, "pressRight")){	pressRight =	photon_realtime_player_properties_get_remote_i32(_playerNumber, "pressRight"); }
+					if (variable_struct_exists(properties, "angleDir")){	angleDir =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "angleDir"); }
+				}
+			}
+		}
+	}
+	
+	
 });
 
 
