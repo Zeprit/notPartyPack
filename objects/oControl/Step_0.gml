@@ -10,7 +10,7 @@ if (instance_exists(oPlayer)){
 	with(oPlayer){
 		if (isPlayer){ _target = self; }
 	}
-	xTo = _target.x + ((_target.cSpd + (_target.dragonSpdExtra*-_target.angleDir))*20) + 20;
+	xTo = ((_target.x + _target.x + 1504) / 3) + ((_target.cSpd + (_target.dragonSpdExtra*-_target.angleDir))*20) + 20;
 	yTo = _target.y - 270;
 	
 	xxt += ((xTo - xxt) * .1);

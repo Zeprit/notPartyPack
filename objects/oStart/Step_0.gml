@@ -17,13 +17,14 @@ if (progress == 1){
 		time--;
 	}else{
 		time = 30;
-		if (state < 0){
-
+		if (state == -1){
+	
 			photon_realtime_select_region("eu");
 
 
 			photon_realtime_set_callback_connected(function(_error_code, _error_string, _region) {
 			    show_debug_message($"[REALTIME CONNECT] code={_error_code} error={_error_string} region={_region}");
+				debugOutput = $"[REALTIME CONNECT] code={_error_code} error={_error_string} region={_region}";
 				if (_error_code == PhotonRealtimeAppErrorCode.Ok){
 					show_debug_message("connected!");
 					state = 0;//we connected!
@@ -38,6 +39,7 @@ if (progress == 1){
 
 			photon_realtime_set_callback_connection_error(function(_error_code) {
 			    show_debug_message($"[REALTIME] Connection error: {_error_code}");
+				debugError = _error_code;
 			})
 
 			show_debug_message($"Connecting into region: {"eu"} - {"Europe — Amsterdam"}")
@@ -50,6 +52,8 @@ if (progress == 1){
 
 			var _appId = extension_get_option_value("GMPhoton", "appIdRealtime")
 			photon_realtime_connect(_appId, "1.0", _photonConnectOptions)
+			
+			state = -0.5;
 		}else if (state == 0){
 		
 			var _photonRoomOptions = new PhotonRealtimeRoomOptions()

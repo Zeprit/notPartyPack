@@ -53,6 +53,10 @@ else if (progress > 0){
 	_y+=20
 	draw_text(_x,_y,"Time until connect: "+string(time));
 	_y+=20
+	draw_text(_x,_y,"debug output: "+string(debugOutput));
+	_y+=20
+	draw_text(_x,_y,"debug error: "+string(debugError));
+	_y+=20
 }
 
 

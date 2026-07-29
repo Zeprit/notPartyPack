@@ -4,6 +4,9 @@ state = -1;
 progress = 0;
 startAlpha = 1;
 
+debugOutput = "";
+debugError = "";
+
 #region CAMERA
 
 	view_enabled = true;
