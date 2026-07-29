@@ -2,6 +2,8 @@ cSpd = 0;
 maxSpd = 3;
 myID = -1;
 
+dragonSpdExtra = 0;
+king = false;
 
 
 slowSin = 0;

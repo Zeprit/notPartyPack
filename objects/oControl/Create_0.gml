@@ -1,8 +1,28 @@
+#region camera
+
+view_enabled = true;
+view_visible[0] = true;
+
+xxt = 0;
+yyt = 0;
+xTo = 0;
+yTo = 0;
+global.shake = 0;
+zooms = 0.8;
+zoom = zooms;
+zoomTo = zooms;
+zoomSpd = 0.01;
+
+#endregion
+
+
 game_state = "waiting";
+extraCheck = 10;
 
 // Every player starts NOT ready
 photon_realtime_player_properties_set_local_bool("ready", false);
-var _xx = irandom(50 + room_width - 100);
+photon_realtime_player_properties_set_local_bool("king", false);
+var _xx = 30 + irandom(170);
 photon_realtime_player_properties_set_local_i32("xx", _xx);
 show_debug_message("start x = "+string(_xx));
 
@@ -77,6 +97,28 @@ photon_realtime_set_callback_custom_event(function(_player_number, _event_code, 
 function func_updated_room(_game_state)
 {
     game_state = _game_state;
+	if (_game_state == "resetting"){
+		var me = photon_realtime_get_local_player_number();
+		var master = photon_realtime_get_master_client_number();
+		
+		if (me != master){
+			photon_realtime_player_properties_set_local_bool("ready", false);
+			photon_realtime_player_properties_set_local_bool("king", false);
+			var _xx = 30 + irandom(170);
+			photon_realtime_player_properties_set_local_i32("xx", _xx);
+			if (instance_exists(oPlayer)){
+				with(oPlayer){
+					if (isPlayer){
+						king = false;
+						x = _xx;
+						resetTimer = room_speed;
+					}
+				}
+			}
+			extraCheck = 0;
+		}
+		
+	}
 }
 
 photon_realtime_set_callback_room_properties_change(function(properties) {
@@ -89,6 +131,8 @@ photon_realtime_set_callback_room_properties_change(function(properties) {
     }
 });
 
+resetTimer = room_speed;
+
 function func_updated_player()
 {
     var me = photon_realtime_get_local_player_number();
@@ -100,8 +144,8 @@ function func_updated_player()
 
     if (count < 2)
     {
-        photon_realtime_room_properties_set_string("game_state", "waiting");
-        func_updated_room("waiting");
+        //photon_realtime_room_properties_set_string("game_state", "waiting");
+        //func_updated_room("waiting");
         return;
     }
 
@@ -124,15 +168,18 @@ function func_updated_player()
     }
 
     if (all_ready){
-        show_debug_message("game_state: playing");
-        photon_realtime_room_properties_set_string("game_state", "playing");
-        func_updated_room("playing");
+        show_debug_message("game_state: go");
+        photon_realtime_room_properties_set_string("game_state", "go");
+        func_updated_room("go");
+		zoomTo = 1;
+		global.shake = 4;
     }else{
-        show_debug_message("game_state: waiting");
-        photon_realtime_room_properties_set_string("game_state", "waiting");
-        func_updated_room("waiting");
+        //show_debug_message("game_state: waiting");
+        //photon_realtime_room_properties_set_string("game_state", "waiting");
+        //func_updated_room("waiting");
     }
 }
+
 
 photon_realtime_set_callback_player_properties_change(function(_playerNumber, properties) {
     show_debug_message(

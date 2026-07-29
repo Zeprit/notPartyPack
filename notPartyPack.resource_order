@@ -14,7 +14,6 @@
     {"name":"obj_photon_room_send_string","order":4,"path":"objects/obj_photon_room_send_string/obj_photon_room_send_string.yy",},
     {"name":"obj_photon_room_voice","order":6,"path":"objects/obj_photon_room_voice/obj_photon_room_voice.yy",},
     {"name":"oControl","order":7,"path":"objects/oControl/oControl.yy",},
-    {"name":"oOtherPlayer","order":11,"path":"objects/oOtherPlayer/oOtherPlayer.yy",},
     {"name":"oPhotonInit","order":6,"path":"objects/oPhotonInit/oPhotonInit.yy",},
     {"name":"oPlayer","order":10,"path":"objects/oPlayer/oPlayer.yy",},
     {"name":"oStart","order":5,"path":"objects/oStart/oStart.yy",},
@@ -23,6 +22,7 @@
     {"name":"sfxLoop","order":15,"path":"sounds/sfxLoop/sfxLoop.yy",},
     {"name":"sPlayer","order":1,"path":"sprites/sPlayer/sPlayer.yy",},
     {"name":"sPlayerHead","order":3,"path":"sprites/sPlayerHead/sPlayerHead.yy",},
+    {"name":"sPlayerHeadKing","order":4,"path":"sprites/sPlayerHeadKing/sPlayerHeadKing.yy",},
     {"name":"sPlayerNeck","order":2,"path":"sprites/sPlayerNeck/sPlayerNeck.yy",},
   ],
 }

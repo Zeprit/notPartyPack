@@ -18,8 +18,13 @@ if (canSwitchAngleDir > 0){ canSwitchAngleDir--; }
 
 #region movement
 var _spdInc = 0.5;
+var _canWalkRight = true, _canWalkLeft = true;
 var _walkRight = false, _walkLeft = false;
 var _spdDivide = 1;
+
+if ((oControl.game_state != "go") && (oControl.game_state != "finish")) && (x > 230){ _canWalkRight = false; }
+if (x < 20){ _canWalkLeft = false; }
+
 if (RIGHT) && !(LEFT){
 	if (angleDir == -1){ _spdDivide = 3; }	//go slower when we are actually moving the other way
 	if (cSpd < (maxSpd/_spdDivide)){ cSpd += _spdInc; }
@@ -45,6 +50,9 @@ if (isPlayer){
 }else{
 	x += (xxTo - x) * 0.5;
 }
+if !(_canWalkRight) && (x > 230){ x = 230; if (cSpd > 0){ cSpd = 0; } }
+if (x > 2850){ x = 2850; }
+if !(_canWalkLeft) && (x < 20){ x = 20; if (cSpd < 0){ cSpd = 0; } }
 
 if (_walkRight) or (_walkLeft){
 	slowSin += .015;
@@ -147,7 +155,25 @@ if (_isPlayer){
 
 #endregion
 
-if (SPACE){
+var _head = false;
+var _dragonSpd = 1;
+if (headAngle > 98) && (headAngle < 165){
+	if (isPlayer){ x -= _dragonSpd+dragonSpdExtra; }
+	_head = true;
+}
+if (headAngle > 98+90) && (headAngle < 165+90){
+	if (isPlayer){ x += _dragonSpd+dragonSpdExtra; }
+	_head = true;
+}
+if !(_head){
+	dragonSpdExtra = 0;
+}else{
+	if (dragonSpdExtra < 15){ dragonSpdExtra += 0.008; }
+	if (dragonSpdExtra < 3){ dragonSpdExtra += 0.015; }
+	if (dragonSpdExtra < 5){ dragonSpdExtra += 0.003; }
+}
+
+if (SPACE) or (_head){
 	if (headIndex > 39){ headIndex = 0; }
 	else if (headIndex >= 39){ headIndex = 6; }
 	
@@ -175,6 +201,26 @@ if (SPACE){
 if (mySound != -1) && (audio_is_playing(mySound)){
 	audio_sound_gain(mySound, mySoundGain, 0);
 	audio_sound_pitch(mySound, 1 + (neckAngle/20));
+}
+
+
+if (isPlayer){
+	var _ready = photon_realtime_player_properties_get_local_bool("ready");
+	if (x > 220) && !(_ready){
+		photon_realtime_player_properties_set_local_bool("ready", true);
+	}else if (x < 218) && (_ready){
+		photon_realtime_player_properties_set_local_bool("ready", false);
+	}
+	
+	if (x > 2014){
+		if (photon_realtime_room_properties_get_string("game_state") != "finish"){
+			photon_realtime_room_properties_set_string("game_state", "finish");
+			oControl.game_state = "finish";
+			king = true;
+			photon_realtime_player_properties_set_local_bool("king", king);
+			global.shake = 5;
+		}
+	}
 }
 
 //if (keyboard_check_pressed(ord("L"))){ room_speed = 5; }
