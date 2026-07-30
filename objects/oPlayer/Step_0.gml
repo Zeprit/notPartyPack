@@ -6,10 +6,6 @@ if (isPlayer){
 
 audio_emitter_position(myEmitter, x, y, 0);
 
-#macro RIGHT pressRight
-#macro LEFT pressLeft
-#macro SPACE pressSpace
-
 #region effects
 slowSin += .015;
 
@@ -207,9 +203,9 @@ if (mySound != -1) && (audio_is_playing(mySound)){
 if (isPlayer){
 	var _ready = photon_realtime_player_properties_get_local_bool("ready");
 	if (x > 220) && !(_ready){
-		photon_realtime_player_properties_set_local_bool("ready", true);
+		//photon_realtime_player_properties_set_local_bool("ready", true);
 	}else if (x < 218) && (_ready){
-		photon_realtime_player_properties_set_local_bool("ready", false);
+		//photon_realtime_player_properties_set_local_bool("ready", false);
 	}
 	
 	if (x > 2014){

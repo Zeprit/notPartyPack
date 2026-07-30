@@ -1,3 +1,43 @@
+
+#region start variables
+
+startAlpha = 1;
+progress = 0;
+
+	#region keybindings & gamepad
+	
+	keyHoldLeft = 0;
+	keyHoldRight = 0;
+	keyHoldUp = 0;
+	keyHoldDown = 0;
+	keyHoldSpace = 0;
+	
+	currentGamepad = 0;
+	gpTapH = false;
+	gpTapV = false;
+	
+	
+	#endregion
+	#region select
+	
+	select = -1;
+	for (var i = 0; i < 100; i++){
+		selectAlpha[i] = 0;
+		selectBounce[i] = 0;
+		selectBounceIndex[i] = 0;
+	}
+	
+	#endregion
+
+#endregion
+#region menu
+
+menuState = "main";
+menuProgress = 0;
+menuRefreshTime = 0;
+
+#endregion
+
 #region camera
 
 view_enabled = true;
@@ -15,22 +55,60 @@ zoomSpd = 0.01;
 
 #endregion
 
+#region game rooms
+
+function createRoom(_name, _maxPlayers)
+constructor{
+	name = _name;
+	playerCount = 0;
+	playerMax = _maxPlayers;
+}
+
+roomInfo[0] = new createRoom("Dragon Race", 4);
+roomInfo[1] = new createRoom("Hide and Seek", 6);
+roomInfo[2] = new createRoom("Coffee Sip", 4);
+
+
+
+#endregion
+
 
 game_state = "waiting";
 extraCheck = 10;
+raceStartTime = 0;
+timeRemaining = 3000;
 
 // Every player starts NOT ready
+/*
 photon_realtime_player_properties_set_local_bool("ready", false);
 photon_realtime_player_properties_set_local_bool("king", false);
 var _xx = 30 + irandom(170);
 photon_realtime_player_properties_set_local_i32("xx", _xx);
 show_debug_message("start x = "+string(_xx));
 
+
 // Master initializes room state
 if (photon_realtime_get_master_client_number() == photon_realtime_get_local_player_number())
 {
     photon_realtime_room_properties_set_string("game_state", "waiting");
 }
+//*/
+
+photon_realtime_set_callback_room_list_update(function(){
+	
+	show_debug_message("photon_set_callback_room_list_update CALLED")
+	var _count = photon_realtime_get_room_list_count();
+	for (var i = 0; i < _count; i++){
+		var _struct = photon_realtime_get_room_info_by_index(i);
+		for (var ii = 0; ii < 3; ii++){
+			if (_struct.name == roomInfo[ii].name){
+				roomInfo[ii].playerCount = _struct.player_count;
+				break;
+			}
+		}
+	}
+    
+});
 
 photon_realtime_set_callback_available_regions(function(_regions, _servers) {
     show_debug_message("on available regions: " + string(_regions) + " / " + string(_servers));
@@ -97,6 +175,7 @@ photon_realtime_set_callback_custom_event(function(_player_number, _event_code, 
 function func_updated_room(_game_state)
 {
     game_state = _game_state;
+	
 	if (_game_state == "resetting"){
 		var me = photon_realtime_get_local_player_number();
 		var master = photon_realtime_get_master_client_number();
@@ -111,7 +190,7 @@ function func_updated_room(_game_state)
 					if (isPlayer){
 						king = false;
 						x = _xx;
-						resetTimer = room_speed;
+						resetTimer = SECOND;
 					}
 				}
 			}
@@ -129,9 +208,13 @@ photon_realtime_set_callback_room_properties_change(function(properties) {
         // We should update locally, because if we update it ourselves we don't receive the callback.
         func_updated_room(properties.game_state);
     }
+	if (variable_struct_exists(properties, "raceStartTime")){
+        raceStartTime = properties.raceStartTime;
+    }
+	
 });
 
-resetTimer = room_speed;
+resetTimer = SECOND;
 
 function func_updated_player()
 {
@@ -169,10 +252,10 @@ function func_updated_player()
 
     if (all_ready){
         show_debug_message("game_state: go");
-        photon_realtime_room_properties_set_string("game_state", "go");
-        func_updated_room("go");
-		zoomTo = 1;
-		global.shake = 4;
+        //photon_realtime_room_properties_set_string("game_state", "go");
+        //func_updated_room("go");
+		//zoomTo = 1;
+		//global.shake = 4;
     }else{
         //show_debug_message("game_state: waiting");
         //photon_realtime_room_properties_set_string("game_state", "waiting");
@@ -191,7 +274,7 @@ photon_realtime_set_callback_player_properties_change(function(_playerNumber, pr
 
     if (variable_struct_exists(properties, "ready")){
         // We should update locally, because if we update it ourselves we don't receive the callback.
-        func_updated_player();
+       // func_updated_player();
     }
 	
 

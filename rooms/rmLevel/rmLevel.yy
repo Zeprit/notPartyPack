@@ -24,8 +24,8 @@
   ],
   "name":"rmLevel",
   "parent":{
-    "name":"notPartyPack",
-    "path":"notPartyPack.yyp",
+    "name":"rooms",
+    "path":"folders/rooms.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

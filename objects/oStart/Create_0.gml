@@ -1,11 +1,20 @@
 
 time = 10;
-state = -1;
+state = "nothing";
 progress = 0;
 startAlpha = 1;
 
 debugOutput = "";
 debugError = "";
+
+#region GLOBAL VARIABLES
+
+global.startAlphaColor = c_black;
+
+global.fntNormal = font_add("DarumadropOne-Regular.ttf", 32, false, false, 32, 127);
+font_enable_sdf(global.fntNormal, true);
+
+#endregion
 
 #region CAMERA
 
@@ -42,3 +51,5 @@ debugError = "";
 	#macro CAMERA view_camera[0]
 	
 #endregion
+
+#macro SECOND 60

@@ -6,7 +6,7 @@ draw_set_valign(fa_left)
 var _x = 30
 var _y = 100
 
-if (progress == 0){
+if (state == "main"){
 	draw_text(_x,_y,"press space to connect!");
 }
 else if (progress > 0){

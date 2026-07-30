@@ -31,4 +31,3 @@ photon_realtime_operation_join_lobby("default", PhotonRealtimeLobbyType.Default,
 		show_debug_message($"photon_operation_join_lobby")
 	});
 
-

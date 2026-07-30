@@ -14,8 +14,8 @@
   "exportDir":"",
   "name":"sfxLoop",
   "parent":{
-    "name":"notPartyPack",
-    "path":"notPartyPack.yyp",
+    "name":"sounds",
+    "path":"folders/sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",
