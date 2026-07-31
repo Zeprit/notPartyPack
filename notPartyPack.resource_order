@@ -1,11 +1,11 @@
 {
   "FolderOrderSettings":[
     {"name":"GM Extensions Assets","order":1,"path":"folders/GM Extensions Assets.yy",},
-    {"name":"scripts","order":17,"path":"folders/scripts.yy",},
     {"name":"MobileUtils","order":2,"path":"folders/MobileUtils.yy",},
     {"name":"Photon Demo","order":3,"path":"folders/Photon Demo.yy",},
     {"name":"Photon","order":4,"path":"folders/Photon.yy",},
     {"name":"rooms","order":16,"path":"folders/rooms.yy",},
+    {"name":"scripts","order":17,"path":"folders/scripts.yy",},
     {"name":"sounds","order":15,"path":"folders/sounds.yy",},
     {"name":"sprites","order":12,"path":"folders/sprites.yy",},
   ],
@@ -22,6 +22,8 @@
     {"name":"oStart","order":5,"path":"objects/oStart/oStart.yy",},
     {"name":"rmLevel","order":2,"path":"rooms/rmLevel/rmLevel.yy",},
     {"name":"rmMenu","order":1,"path":"rooms/rmMenu/rmMenu.yy",},
+    {"name":"sfxLowThumb","order":1,"path":"sounds/sfxLowThumb/sfxLowThumb.yy",},
+    {"name":"sfxSelect","order":2,"path":"sounds/sfxSelect/sfxSelect.yy",},
     {"name":"sPlayer","order":1,"path":"sprites/sPlayer/sPlayer.yy",},
     {"name":"sPlayerHead","order":3,"path":"sprites/sPlayerHead/sPlayerHead.yy",},
     {"name":"sPlayerHeadKing","order":4,"path":"sprites/sPlayerHeadKing/sPlayerHeadKing.yy",},

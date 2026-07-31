@@ -80,9 +80,21 @@ if (room == rmMenu){
 	switch(menuState){
 		case "main":
 			
-			if (SPACE_PRESSED){
+			if (keyboard_check_pressed(vk_enter)){
 				menuState = "connect to lobby";
+				keyboard_string = "";
+				audio_play_sound(sfxLowThumb, 1, false,,,2);
+				//audio_play_sound(sfxSelect, 1, false,,,random_range(1.3, 1.34));
 				menuProgress = 0;
+			}
+			if !(SPACE) && !(keyboard_check_pressed(vk_enter)) && (keyboard_check_pressed(vk_anykey)){
+				if (string_length(global.userName) < 8){
+					global.userName += keyboard_string;
+				}
+				if (keyboard_check_pressed(vk_backspace)) && (string_length(global.userName) > 0){
+					global.userName = string_delete(global.userName, -1, 1);
+				}
+				keyboard_string = "";
 			}
 			
 		break;
@@ -140,22 +152,22 @@ if (room == rmMenu){
 		#region LOBBY
 		case "lobby":
 		
-
-		
 		if (menuProgress == 0){
 
-			
 			if (UP_PRESSED){
+				if (select > 0){ audio_play_sound(sfxSelect, 1, false, 1,,random_range(0.96, 1.04)); }
 				select--;
 			}
 			if (DOWN_PRESSED){
+				if (select < 2){ audio_play_sound(sfxSelect, 1, false, 1,,random_range(0.96, 1.04)); }
 				select++;
 			}
 			if (select > 2){ select = 2; }
 			if (select < 0){ select = 0; }
 		
 			if (SPACE_PRESSED){
-			
+				//audio_play_sound(sfxSelect, 1, false, 1,,random_range(1.3, 1.34));
+				audio_play_sound(sfxLowThumb, 1, false,,,2);
 				show_debug_message("joining room...");
 			
 				//create the room options:
@@ -181,6 +193,13 @@ if (room == rmMenu){
 					
 					}
 				});
+				exit;
+			}
+			
+			if (BACK_PRESSED){
+				photon_realtime_disconnect();
+				menuState = "main";
+				menuProgress = 0;
 			}
 			
 		}

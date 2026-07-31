@@ -16,7 +16,6 @@ progress = 0;
 	gpTapH = false;
 	gpTapV = false;
 	
-	
 	#endregion
 	#region select
 	
@@ -35,6 +34,8 @@ progress = 0;
 menuState = "main";
 menuProgress = 0;
 menuRefreshTime = 0;
+
+menuList = ds_list_create();
 
 #endregion
 

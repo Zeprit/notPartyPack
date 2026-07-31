@@ -14,6 +14,8 @@ global.startAlphaColor = c_black;
 global.fntNormal = font_add("DarumadropOne-Regular.ttf", 32, false, false, 32, 127);
 font_enable_sdf(global.fntNormal, true);
 
+global.userName = "";
+
 #endregion
 
 #region CAMERA

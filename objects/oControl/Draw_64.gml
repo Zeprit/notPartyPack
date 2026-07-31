@@ -6,10 +6,18 @@ if (room == rmMenu){
 	switch(menuState){
 		case "main":
 
-			var _txt = "press space to connect!";
+			var _txt = $"username: {global.userName}";
 			var _txtScale = 2;
-			var _txtWidth = (string_width(_txt)*_txtScale);
-			draw_text_transformed((WIDTH/2) - (_txtWidth/2), (HEIGHT/1.8), _txt, _txtScale, _txtScale, 0);
+			var _txtWidth = (string_width(_txt)*_txtScale), _txtHeight = (string_height(_txt)*_txtScale);
+			draw_text_transformed((WIDTH/2) - (_txtWidth/2), (HEIGHT/2.5), _txt, _txtScale, _txtScale, 0);
+			//draw_text_transformed((WIDTH/2) - (_txtWidth/2), (HEIGHT/2.5) + _txtHeight, global.userName, _txtScale, _txtScale, 0);
+
+			if (global.userName != ""){
+				var _txt = "press enter to connect!";
+				var _txtScale = 2;
+				var _txtWidth = (string_width(_txt)*_txtScale);
+				draw_text_transformed((WIDTH/2) - (_txtWidth/2), (HEIGHT/1.8), _txt, _txtScale, _txtScale, 0);
+			}
 
 		break;
 		case "connect to lobby":
@@ -41,8 +49,8 @@ if (room == rmMenu){
 }
 
 if (room == rmLevel){
-	draw_text_transformed(WIDTH/12, HEIGHT/3, $"Room Name: {photon_realtime_get_current_room_name()}", 0.75, 0.75, 0);
-	draw_text_transformed(WIDTH/12, HEIGHT/3 + 22, $"Players: {photon_realtime_get_room_player_count()}", 0.75, 0.75, 0);
+	draw_text_transformed(WIDTH/12, HEIGHT/6, $"Room Name: {photon_realtime_get_current_room_name()}", 0.75, 0.75, 0);
+	draw_text_transformed(WIDTH/12, HEIGHT/6 + 22, $"Players: {photon_realtime_get_room_player_count()}", 0.75, 0.75, 0);
 }
 
 #region STARTALPHA
