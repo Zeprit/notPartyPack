@@ -83,6 +83,7 @@
     {"id":{"name":"oPhotonInit","path":"objects/oPhotonInit/oPhotonInit.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
     {"id":{"name":"oStart","path":"objects/oStart/oStart.yy",},},
+    {"id":{"name":"oTriggerBlock","path":"objects/oTriggerBlock/oTriggerBlock.yy",},},
     {"id":{"name":"rm_photon_chat_connected","path":"rooms/rm_photon_chat_connected/rm_photon_chat_connected.yy",},},
     {"id":{"name":"rm_photon_chat","path":"rooms/rm_photon_chat/rm_photon_chat.yy",},},
     {"id":{"name":"rm_photon_realtime_init","path":"rooms/rm_photon_realtime_init/rm_photon_realtime_init.yy",},},

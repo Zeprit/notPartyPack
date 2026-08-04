@@ -20,6 +20,7 @@
     {"name":"oPhotonInit","order":6,"path":"objects/oPhotonInit/oPhotonInit.yy",},
     {"name":"oPlayer","order":11,"path":"objects/oPlayer/oPlayer.yy",},
     {"name":"oStart","order":5,"path":"objects/oStart/oStart.yy",},
+    {"name":"oTriggerBlock","order":18,"path":"objects/oTriggerBlock/oTriggerBlock.yy",},
     {"name":"rmLevel","order":2,"path":"rooms/rmLevel/rmLevel.yy",},
     {"name":"rmMenu","order":1,"path":"rooms/rmMenu/rmMenu.yy",},
     {"name":"sfxLowThumb","order":1,"path":"sounds/sfxLowThumb/sfxLowThumb.yy",},

@@ -147,6 +147,9 @@ photon_realtime_set_callback_join_room_event(function(_joining_player_number, _p
         ", inactive=" + string(_is_inactive) +
         ", master=" + string(_is_master_client)
     );
+	if (instance_exists(oTriggerBlock)){
+		oTriggerBlock.maxPlayers = photon_realtime_get_player_count();
+	}
 });
 
 photon_realtime_set_callback_leave_room_event(function(_playerNumber, _is_inactive) {
@@ -161,6 +164,9 @@ photon_realtime_set_callback_leave_room_event(function(_playerNumber, _is_inacti
 				instance_destroy();
 			}
 		}
+	}
+	if (instance_exists(oTriggerBlock)){
+		oTriggerBlock.maxPlayers = photon_realtime_get_player_count();
 	}
 });
 
