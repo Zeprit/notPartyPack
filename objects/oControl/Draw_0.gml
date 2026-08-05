@@ -19,7 +19,7 @@ for (var i = 0; i < _count; i++) {
     var _master = photon_realtime_player_is_master_client(_nr);
     draw_text_transformed(10,560+i*20,$"Player {_nr}: {_uid} | master={_master}", 0.5, 0.5, 0);
 }
-
+//*/
 
 if (game_state == "count down") or (game_state == "go"){
 	var _countTxt = "";

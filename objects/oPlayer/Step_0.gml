@@ -21,13 +21,13 @@ var _spdDivide = 1;
 if ((oControl.game_state != "go") && (oControl.game_state != "finish")) && (x > 230){ _canWalkRight = false; }
 if (x < 20){ _canWalkLeft = false; }
 
-if (RIGHT) && !(LEFT){
+if (pressRight) && !(pressLeft){
 	if (angleDir == -1){ _spdDivide = 3; }	//go slower when we are actually moving the other way
 	if (cSpd < (maxSpd/_spdDivide)){ cSpd += _spdInc; }
 	else if (cSpd >= (maxSpd/_spdDivide)+_spdInc){ cSpd -= _spdInc; }
 	_walkRight = true;
 	
-}else if (LEFT) && !(RIGHT){
+}else if (pressLeft) && !(pressRight){
 	if (angleDir == 1){ _spdDivide = 3; }
 	if (cSpd > -(maxSpd/_spdDivide)){ cSpd -= _spdInc; }
 	else if (cSpd < -(maxSpd/_spdDivide)-_spdInc){ cSpd += _spdInc; }
@@ -169,7 +169,7 @@ if !(_head){
 	if (dragonSpdExtra < 5){ dragonSpdExtra += 0.003; }
 }
 
-if (SPACE) or (_head){
+if (pressSpace) or (_head){
 	if (headIndex > 39){ headIndex = 0; }
 	else if (headIndex >= 39){ headIndex = 6; }
 	

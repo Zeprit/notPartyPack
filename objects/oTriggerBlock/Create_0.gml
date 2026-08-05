@@ -1,4 +1,4 @@
-image_blend = #7CB25B;
+image_blend = #35B25B;
 
 on = false;
 onAlpha = 0;

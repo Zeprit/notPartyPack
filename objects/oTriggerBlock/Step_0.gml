@@ -14,4 +14,4 @@ if (on){
 	onAlpha += (0 - onAlpha)*0.25;
 }
 
-image_blend = merge_color(#7CB25B, merge_color(#7CB25B, c_white, 0.3), onAlpha);
+image_blend = merge_color(#35B25B, merge_color(#35B25B, c_white, 0.2), onAlpha);
