@@ -35,3 +35,6 @@ xxTo = x;
 myEmitter = audio_emitter_create();
 mySound = -1;
 mySoundGain = 0;
+
+
+animating = false;

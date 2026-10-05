@@ -61,7 +61,45 @@ if (_walkRight) or (_walkLeft){
 }
 #endregion
 
+if (isPlayer){
+	if (SPACE_PRESSED){
+		animating = true;
+		sprite_index = sPlayerThrow;
+		image_index = 0;
+	}
+	if (animating){
+		if (sprite_index == sPlayerThrow){
+			if (image_index < 30) && (SPACE_RELEASED){
+			
+				var _myWater = instance_create_depth(x, y-150, depth-1, oWaterball);
+					_myWater.grav = -14 + (image_index/6);
+					_myWater.spd = image_index / 3.5;
+					
+				var _posGrav = abs(_myWater.grav);
+				
+				var b = buffer_create(64, buffer_grow, 1);
+				buffer_seek(b, buffer_seek_start, 0);
+				buffer_write(b, buffer_u16, 1);
+				buffer_write(b, buffer_u16, x);
+				buffer_write(b, buffer_u16, y-150);
+				buffer_write(b, buffer_u16, _posGrav);
+				buffer_write(b, buffer_u16, _myWater.spd);
+				photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
+	
+				buffer_delete(b)
+			
+				image_index = 30;
+			}
+			if (image_index >= image_number-2){ sprite_index = sPlayer; animating = false; }
+		}
+	
+	}
+}
+
 #region angle
+
+/*
+
 bodyAngle = sin(slowSin)*2;		//breathing effect for body.
 
 var _isPlayer = isPlayer;
@@ -149,8 +187,11 @@ if (_isPlayer){
 
 }
 
+//*/
+
 #endregion
 
+/*
 var _head = false;
 var _dragonSpd = 1;
 if (headAngle > 98) && (headAngle < 165){
@@ -218,6 +259,6 @@ if (isPlayer){
 		}
 	}
 }
-
+//*/
 //if (keyboard_check_pressed(ord("L"))){ room_speed = 5; }
 //if (keyboard_check_pressed(ord("K"))){ room_speed = 60; }

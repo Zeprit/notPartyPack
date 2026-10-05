@@ -244,7 +244,7 @@ if (spawnPlayer > 0){
 		
 		var b = buffer_create(64, buffer_grow, 1);
 		buffer_seek(b, buffer_seek_start, 0);
-	
+		buffer_write(b, buffer_u16, 0);
 		buffer_write(b, buffer_u16, photon_realtime_player_properties_get_local_i32("xx"));
 		buffer_write(b, buffer_u16, 576);
 		buffer_write(b, buffer_u16, photon_realtime_get_local_player_number());
@@ -313,15 +313,28 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 	if (r.ok)
 	{
 	    buffer_seek(recv, buffer_seek_start, 0);
-
-	    var _x = buffer_read(recv, buffer_u16);
-	    var _y = buffer_read(recv, buffer_u16);
-		var _myID = buffer_read(recv, buffer_u16);
+		var _what = buffer_read(recv, buffer_u16);
+		
+		if (_what == 0){
+		    var _x = buffer_read(recv, buffer_u16);
+		    var _y = buffer_read(recv, buffer_u16);
+			var _myID = buffer_read(recv, buffer_u16);
 	
-		var _playerSpawn = instance_create_depth(_x,_y,0,oPlayer)
-			_playerSpawn.myID = _myID;
-			_playerSpawn.xxTo = _x;
-			_playerSpawn.isPlayer = false;
+			var _playerSpawn = instance_create_depth(_x,_y,0,oPlayer)
+				_playerSpawn.myID = _myID;
+				_playerSpawn.xxTo = _x;
+				_playerSpawn.isPlayer = false;
+			
+		}else{
+			var _x = buffer_read(recv, buffer_u16);
+		    var _y = buffer_read(recv, buffer_u16);
+			var _grav = buffer_read(recv, buffer_u16);
+			var _spd = buffer_read(recv, buffer_u16);
+	
+			var _waterSpawn = instance_create_depth(_x,_y, -1,oWaterball)
+				_waterSpawn.grav = -_grav;
+				_waterSpawn.spd = _spd;
+		}
 	}
 
 	buffer_delete(recv)
