@@ -64,8 +64,11 @@ if (_walkRight) or (_walkLeft){
 if (isPlayer){
 	if (SPACE_PRESSED){
 		animating = true;
+		
 		sprite_index = sPlayerThrow;
 		image_index = 0;
+		photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+		photon_realtime_player_properties_set_local_i32("image_index", image_index);
 	}
 	if (animating){
 		if (sprite_index == sPlayerThrow){
@@ -89,6 +92,7 @@ if (isPlayer){
 				buffer_delete(b)
 			
 				image_index = 30;
+				photon_realtime_player_properties_set_local_i32("image_index", image_index);
 			}
 			if (image_index >= image_number-2){ sprite_index = sPlayer; animating = false; }
 		}

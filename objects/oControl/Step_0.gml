@@ -265,7 +265,7 @@ if (spawnPlayer > 0){
 }else{
 	if (extraCheck > 0){ extraCheck--; }
 	else{
-		extraCheck = 30;
+		extraCheck = 20;
 		var _count = photon_realtime_get_player_count();
 		for (var i = 0; i < _count; i++){
 			
@@ -275,6 +275,9 @@ if (spawnPlayer > 0){
 					with(oPlayer){
 						if !(isPlayer) && (myID == _nr){
 							xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
+							sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
+							image_index =	photon_realtime_player_properties_get_remote_i32(_nr, "image_index");
+							/*
 							headAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "headAngle");
 							neckAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "neckAngle");
 							pressSpace =	photon_realtime_player_properties_get_remote_i32(_nr, "pressSpace");
@@ -282,6 +285,7 @@ if (spawnPlayer > 0){
 							pressRight =	photon_realtime_player_properties_get_remote_i32(_nr, "pressRight");
 							angleDir =		photon_realtime_player_properties_get_remote_i32(_nr, "angleDir");
 							king =			photon_realtime_player_properties_get_remote_bool(_nr, "king");
+							//*/
 						}
 					}
 				}
@@ -292,12 +296,15 @@ if (spawnPlayer > 0){
 		with(oPlayer){
 			if (isPlayer){
 				photon_realtime_player_properties_set_local_i32("xx", x);
+				photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+				/*
 				photon_realtime_player_properties_set_local_i32("headAngle", headAngle);
 				photon_realtime_player_properties_set_local_i32("neckAngle", neckAngle);
 				photon_realtime_player_properties_set_local_i32("pressSpace", pressSpace);
 				photon_realtime_player_properties_set_local_i32("pressLeft", pressLeft);
 				photon_realtime_player_properties_set_local_i32("pressRight", pressRight);
 				photon_realtime_player_properties_set_local_i32("angleDir", angleDir);
+				//*/
 			}
 		}
 	}
@@ -310,12 +317,13 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 	var recv = buffer_create(256, buffer_fixed, 1);
 	var r = photon_realtime_receive_one_event_buffer(recv, 256, 0);
 
-	if (r.ok)
-	{
+	if (r.ok){
+
 	    buffer_seek(recv, buffer_seek_start, 0);
 		var _what = buffer_read(recv, buffer_u16);
 		
 		if (_what == 0){
+			//0: SPAWN PLAYER
 		    var _x = buffer_read(recv, buffer_u16);
 		    var _y = buffer_read(recv, buffer_u16);
 			var _myID = buffer_read(recv, buffer_u16);
@@ -326,6 +334,7 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 				_playerSpawn.isPlayer = false;
 			
 		}else{
+			//1: THROW WATER
 			var _x = buffer_read(recv, buffer_u16);
 		    var _y = buffer_read(recv, buffer_u16);
 			var _grav = buffer_read(recv, buffer_u16);
