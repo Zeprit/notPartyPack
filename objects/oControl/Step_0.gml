@@ -28,7 +28,8 @@ if (instance_exists(oPlayer)){
 	with(oPlayer){
 		if (isPlayer){ _target = self; }
 	}
-	xTo = ((_target.x + _target.x + 1504) / 3) + ((_target.cSpd + (_target.dragonSpdExtra*-_target.angleDir))*20) + 20;
+	//xTo = ((_target.x + _target.x + 1504) / 3) + ((_target.cSpd + (_target.dragonSpdExtra*-_target.angleDir))*20) + 20;
+	xTo = _target.x;
 	yTo = _target.y - 270;
 }
 
@@ -277,6 +278,7 @@ if (spawnPlayer > 0){
 							xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 							sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
 							image_index =	photon_realtime_player_properties_get_remote_i32(_nr, "image_index");
+							xScale =	photon_realtime_player_properties_get_remote_i32(_nr, "xScale");
 							/*
 							headAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "headAngle");
 							neckAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "neckAngle");
@@ -297,6 +299,7 @@ if (spawnPlayer > 0){
 			if (isPlayer){
 				photon_realtime_player_properties_set_local_i32("xx", x);
 				photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+				photon_realtime_player_properties_set_local_i32("xScale", xScale);
 				/*
 				photon_realtime_player_properties_set_local_i32("headAngle", headAngle);
 				photon_realtime_player_properties_set_local_i32("neckAngle", neckAngle);
@@ -339,10 +342,13 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 		    var _y = buffer_read(recv, buffer_u16);
 			var _grav = buffer_read(recv, buffer_u16);
 			var _spd = buffer_read(recv, buffer_u16);
+			var _xScale = buffer_read(recv, buffer_u16);
+			var _realXScale = 1;
+			if (_xScale == 1){ _realXScale = -1; }
 	
 			var _waterSpawn = instance_create_depth(_x,_y, -1,oWaterball)
 				_waterSpawn.grav = -_grav;
-				_waterSpawn.spd = _spd;
+				_waterSpawn.spd = _spd*_realXScale;
 		}
 	}
 

@@ -18,20 +18,22 @@ var _canWalkRight = true, _canWalkLeft = true;
 var _walkRight = false, _walkLeft = false;
 var _spdDivide = 1;
 
-if ((oControl.game_state != "go") && (oControl.game_state != "finish")) && (x > 230){ _canWalkRight = false; }
+if (x > 1350){ _canWalkRight = false; }
 if (x < 20){ _canWalkLeft = false; }
 
 if (pressRight) && !(pressLeft){
-	if (angleDir == -1){ _spdDivide = 3; }	//go slower when we are actually moving the other way
-	if (cSpd < (maxSpd/_spdDivide)){ cSpd += _spdInc; }
-	else if (cSpd >= (maxSpd/_spdDivide)+_spdInc){ cSpd -= _spdInc; }
+
+	if (cSpd < (maxSpd)){ cSpd += _spdInc; }
+	else if (cSpd >= (maxSpd)+_spdInc){ cSpd -= _spdInc; }
 	_walkRight = true;
+	xScale = 1;
 	
 }else if (pressLeft) && !(pressRight){
-	if (angleDir == 1){ _spdDivide = 3; }
-	if (cSpd > -(maxSpd/_spdDivide)){ cSpd -= _spdInc; }
-	else if (cSpd < -(maxSpd/_spdDivide)-_spdInc){ cSpd += _spdInc; }
+
+	if (cSpd > -(maxSpd)){ cSpd -= _spdInc; }
+	else if (cSpd < -(maxSpd)-_spdInc){ cSpd += _spdInc; }
 	_walkLeft = true;
+	xScale = -1;
 	
 }else{
 	if (cSpd > _spdInc){ cSpd -= _spdInc; }
@@ -76,9 +78,12 @@ if (isPlayer){
 			
 				var _myWater = instance_create_depth(x, y-150, depth-1, oWaterball);
 					_myWater.grav = -14 + (image_index/6);
-					_myWater.spd = image_index / 3.5;
+					_myWater.spd = (image_index / 3.5)*xScale;
 					
 				var _posGrav = abs(_myWater.grav);
+				var _posSpd = abs(_myWater.spd);
+				var _xScale = 0;
+				if (xScale == -1){ _xScale = 1; }
 				
 				var b = buffer_create(64, buffer_grow, 1);
 				buffer_seek(b, buffer_seek_start, 0);
@@ -86,7 +91,8 @@ if (isPlayer){
 				buffer_write(b, buffer_u16, x);
 				buffer_write(b, buffer_u16, y-150);
 				buffer_write(b, buffer_u16, _posGrav);
-				buffer_write(b, buffer_u16, _myWater.spd);
+				buffer_write(b, buffer_u16, _posSpd);
+				buffer_write(b, buffer_u16, _xScale);
 				photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
 	
 				buffer_delete(b)
