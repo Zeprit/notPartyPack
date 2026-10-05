@@ -32,6 +32,7 @@
     {"name":"sBGHouse","order":6,"path":"sprites/sBGHouse/sBGHouse.yy",},
     {"name":"sCloud","order":5,"path":"sprites/sCloud/sCloud.yy",},
     {"name":"sCorn","order":4,"path":"sprites/sCorn/sCorn.yy",},
+    {"name":"sFaucet","order":8,"path":"sprites/sFaucet/sFaucet.yy",},
     {"name":"sFence","order":3,"path":"sprites/sFence/sFence.yy",},
     {"name":"sGround","order":2,"path":"sprites/sGround/sGround.yy",},
     {"name":"sHouse","order":1,"path":"sprites/sHouse/sHouse.yy",},
@@ -40,5 +41,6 @@
     {"name":"sPlayerHeadKing","order":5,"path":"sprites/sPlayerHeadKing/sPlayerHeadKing.yy",},
     {"name":"sPlayerNeck","order":3,"path":"sprites/sPlayerNeck/sPlayerNeck.yy",},
     {"name":"sPlayerThrow","order":2,"path":"sprites/sPlayerThrow/sPlayerThrow.yy",},
+    {"name":"sPumpkinGrow","order":9,"path":"sprites/sPumpkinGrow/sPumpkinGrow.yy",},
   ],
 }
