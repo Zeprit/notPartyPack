@@ -5,8 +5,12 @@ myID = -1;
 dragonSpdExtra = 0;
 king = false;
 
+canBlink = irandom(room_speed*6);
+blinkTime = 0;
+
 
 slowSin = 0;
+state = "";
 
 bodyAngle = 0;
 neckAngle = 0;

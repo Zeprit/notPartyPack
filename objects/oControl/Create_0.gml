@@ -184,6 +184,7 @@ function func_updated_room(_game_state)
     game_state = _game_state;
 	
 	if (_game_state == "resetting"){
+		show_debug_message("gamestate: resetting...");
 		var me = photon_realtime_get_local_player_number();
 		var master = photon_realtime_get_master_client_number();
 		

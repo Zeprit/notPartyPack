@@ -11,8 +11,8 @@
   "name":"oPhotonInit",
   "overriddenProperties":[],
   "parent":{
-    "name":"notPartyPack",
-    "path":"notPartyPack.yyp",
+    "name":"objects",
+    "path":"folders/objects.yy",
   },
   "parentObjectId":null,
   "persistent":true,

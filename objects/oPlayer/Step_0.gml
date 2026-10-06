@@ -18,17 +18,18 @@ var _canWalkRight = true, _canWalkLeft = true;
 var _walkRight = false, _walkLeft = false;
 var _spdDivide = 1;
 
-if (x > 1350){ _canWalkRight = false; }
+if (x > 2914){ _canWalkRight = false; }
 if (x < 20){ _canWalkLeft = false; }
+if (state != "") && (sprite_index != sPlayerGrab) && (sprite_index != sPlayerThrow){ _canWalkRight = false; _canWalkLeft = false; }
 
-if (pressRight) && !(pressLeft){
+if (pressRight) && !(pressLeft) && (_canWalkRight){
 
 	if (cSpd < (maxSpd)){ cSpd += _spdInc; }
 	else if (cSpd >= (maxSpd)+_spdInc){ cSpd -= _spdInc; }
 	_walkRight = true;
 	xScale = 1;
 	
-}else if (pressLeft) && !(pressRight){
+}else if (pressLeft) && !(pressRight) && (_canWalkLeft){
 
 	if (cSpd > -(maxSpd)){ cSpd -= _spdInc; }
 	else if (cSpd < -(maxSpd)-_spdInc){ cSpd += _spdInc; }
@@ -43,42 +44,98 @@ if (pressRight) && !(pressLeft){
 	}
 }
 
+if !(_canWalkLeft) && (x < 20){ if (cSpd < 0){ cSpd = 0; } }
+
 if (isPlayer){
 	x += cSpd;
 }else{
 	x += (xxTo - x) * 0.5;
 }
-if !(_canWalkRight) && (x > 230){ x = 230; if (cSpd > 0){ cSpd = 0; } }
-if (x > 2850){ x = 2850; }
-if !(_canWalkLeft) && (x < 20){ x = 20; if (cSpd < 0){ cSpd = 0; } }
 
-if (_walkRight) or (_walkLeft){
-	slowSin += .015;
-	legIndex += 0.3 + ((1/_spdDivide)*0.7);
-}else{
-	if !(((legIndex % sprite_get_number(sPlayer)) <= 1) && ((legIndex % sprite_get_number(sPlayer)) >= 0))
-	&& !(((legIndex % sprite_get_number(sPlayer)) <= 31) && ((legIndex % sprite_get_number(sPlayer)) >= 30)){
-		legIndex++;
+#endregion
+
+#region walk & idle animations
+
+if (state == ""){
+	if (sprite_index == sPlayerThrow) or (sprite_index == sPlayerGrab){
+		if (image_index >= image_number-1.5){ sprite_index = sPlayer; image_index = 0;}
+	}
+	
+	if ((_walkRight) or (_walkLeft)){
+		//if we are walking:
+		slowSin += .015;
+		if (sprite_index == sPlayer) or (sprite_index == sPlayerBlink){ sprite_index = sPlayerWalk; }
+
+	}else{
+		//if we aren't walking:
+		if (sprite_index == sPlayerWalk){
+			if !(((image_index % sprite_get_number(sPlayer)) <= 1) && ((image_index % sprite_get_number(sPlayer)) >= 0))
+			&& !(((image_index % sprite_get_number(sPlayer)) <= 20) && ((image_index % sprite_get_number(sPlayer)) >= 19)){
+				//still walking
+			}else{
+				 sprite_index = sPlayer;
+			}
+		}else{
+			
+			if (sprite_index == sPlayer){
+				if (canBlink > 0){ canBlink--; }
+				else{
+					canBlink = irandom(room_speed*8);
+					sprite_index = sPlayerBlink;
+					blinkTime = irandom_range(7, 12);
+				}
+			}else if (sprite_index == sPlayerBlink){
+				if (blinkTime > 0){ blinkTime--; }
+				else{
+					sprite_index = sPlayer;
+				}
+			}
+			
+			
+		}
 	}
 }
+
 #endregion
 
 if (isPlayer){
-	if (SPACE_PRESSED){
-		animating = true;
-		
-		sprite_index = sPlayerThrow;
-		image_index = 0;
-		photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
-		photon_realtime_player_properties_set_local_i32("image_index", image_index);
+	
+	if (state == ""){
+		if (SPACE_PRESSED){
+			state = "grab";
+			sprite_index = sPlayerGrab;
+			image_index = 0;
+			photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+			photon_realtime_player_properties_set_local_i32("image_index", image_index);
+		}
 	}
-	if (animating){
+	
+	if (state == "grab"){
+		
+		if (sprite_index == sPlayerGrab){
+			if (SPACE){
+				if (x > 540){
+					//at water!
+					if (image_index > 6){ sprite_index = sPlayerThrow; }
+					
+				}else{
+					
+					if (image_index >= 6){ image_index = 6; }
+					
+				}
+			}else{
+				if (image_index > 6){ state = ""; }
+			}
+		}
+		
 		if (sprite_index == sPlayerThrow){
-			if (image_index < 30) && (SPACE_RELEASED){
 			
+			if (SPACE_RELEASED) or (image_index >= 67){
+				
+				var _index = (image_index - 6) / (66 - 6);	//the longer you hold the higher this is from 0 to 1
 				var _myWater = instance_create_depth(x, y-150, depth-1, oWaterball);
-					_myWater.grav = -14 + (image_index/6);
-					_myWater.spd = (image_index / 3.5)*xScale;
+					_myWater.grav = -14 + (6 * _index);
+					_myWater.spd = (-1.5 + (_index * 10))*xScale;
 					
 				var _posGrav = abs(_myWater.grav);
 				var _posSpd = abs(_myWater.spd);
@@ -97,13 +154,26 @@ if (isPlayer){
 	
 				buffer_delete(b)
 			
-				image_index = 30;
+				image_index = 67;
 				photon_realtime_player_properties_set_local_i32("image_index", image_index);
+				
+				state = "";
 			}
-			if (image_index >= image_number-2){ sprite_index = sPlayer; animating = false; }
+			
 		}
-	
+		
 	}
+	
+	
+	if (sprite_index == sPlayerThrow){
+		if (image_index < 30) && (SPACE_RELEASED){
+			
+			
+		}
+		if (image_index >= image_number-2){ sprite_index = sPlayer; animating = false; }
+	}
+	
+
 }
 
 #region angle
