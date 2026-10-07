@@ -20,7 +20,7 @@ var _spdDivide = 1;
 
 if (x > 2914){ _canWalkRight = false; }
 if (x < 20){ _canWalkLeft = false; }
-if (state != "") && (sprite_index != sPlayerGrab) && (sprite_index != sPlayerThrow){ _canWalkRight = false; _canWalkLeft = false; }
+if (sprite_index == sPlayerGrab) && (sprite_index == sPlayerThrow){ _canWalkRight = false; _canWalkLeft = false; }
 
 if (pressRight) && !(pressLeft) && (_canWalkRight){
 
@@ -120,7 +120,11 @@ if (isPlayer){
 						sprite_index = sPlayerThrow;
 						var _catch = instance_place(x+(48*xScale), y, oWaterball);
 						if (_catch != noone){
-							with(_catch){ instance_destroy(); }
+							with(_catch){
+								instance_create_depth(x, y, depth-1, oPickupEffect);
+								audio_play_sound(sfxSelect, 1, false, 0.8,, random_range(1.1, 1.2));
+								instance_destroy();
+							}
 						}
 					}
 					
