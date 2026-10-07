@@ -20,7 +20,7 @@ var _spdDivide = 1;
 
 if (x > 2914){ _canWalkRight = false; }
 if (x < 20){ _canWalkLeft = false; }
-if (sprite_index == sPlayerGrab) && (sprite_index == sPlayerThrow){ _canWalkRight = false; _canWalkLeft = false; }
+if (sprite_index == sPlayerGrab) or (sprite_index == sPlayerThrow){ _canWalkRight = false; _canWalkLeft = false; }
 
 if (pressRight) && !(pressLeft) && (_canWalkRight){
 

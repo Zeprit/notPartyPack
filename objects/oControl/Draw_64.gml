@@ -49,8 +49,8 @@ if (room == rmMenu){
 }
 
 if (room == rmLevel){
-	draw_text_transformed(WIDTH/12, HEIGHT/6, $"Room Name: {photon_realtime_get_current_room_name()}", 0.75, 0.75, 0);
-	draw_text_transformed(WIDTH/12, HEIGHT/6 + 22, $"Players: {photon_realtime_get_room_player_count()}", 0.75, 0.75, 0);
+	//draw_text_transformed(WIDTH/12, HEIGHT/6, $"Room Name: {photon_realtime_get_current_room_name()}", 0.75, 0.75, 0);
+	//draw_text_transformed(WIDTH/12, HEIGHT/6 + 22, $"Players: {photon_realtime_get_room_player_count()}", 0.75, 0.75, 0);
 }
 
 #region STARTALPHA
