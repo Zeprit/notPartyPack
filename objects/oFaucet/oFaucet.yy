@@ -1,13 +1,12 @@
 {
   "$GMObject":"",
-  "%Name":"oPlayer",
+  "%Name":"oFaucet",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"oPlayer",
+  "name":"oFaucet",
   "overriddenProperties":[],
   "parent":{
     "name":"objects",
@@ -32,12 +31,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sPlayer",
-    "path":"sprites/sPlayer/sPlayer.yy",
+    "name":"sFaucet",
+    "path":"sprites/sFaucet/sFaucet.yy",
   },
-  "spriteMaskId":{
-    "name":"sPlayerMask",
-    "path":"sprites/sPlayerMask/sPlayerMask.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }

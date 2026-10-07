@@ -101,7 +101,7 @@ if (state == ""){
 if (isPlayer){
 	
 	if (state == ""){
-		if (SPACE_PRESSED){
+		if (SPACE_PRESSED) && !((sprite_index == sPlayerThrow) && (image_index >= 67)){
 			state = "grab";
 			sprite_index = sPlayerGrab;
 			image_index = 0;
@@ -114,9 +114,15 @@ if (isPlayer){
 		
 		if (sprite_index == sPlayerGrab){
 			if (SPACE){
-				if (x > 540){
+				if (place_meeting(x+(48*xScale), y, oWaterball)){
 					//at water!
-					if (image_index > 6){ sprite_index = sPlayerThrow; }
+					if (image_index >= 6){
+						sprite_index = sPlayerThrow;
+						var _catch = instance_place(x+(48*xScale), y, oWaterball);
+						if (_catch != noone){
+							with(_catch){ instance_destroy(); }
+						}
+					}
 					
 				}else{
 					
