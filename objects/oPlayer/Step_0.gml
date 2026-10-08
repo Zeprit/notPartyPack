@@ -2,6 +2,9 @@ if (isPlayer){
 	pressRight =	(keyboard_check(vk_right)) or (keyboard_check(ord("D")));
 	pressLeft =		(keyboard_check(vk_left)) or (keyboard_check(ord("A")));
 	pressSpace =	(keyboard_check(vk_space));
+	pressSpacePress = (keyboard_check_pressed(vk_space));
+	pressSpaceRelease = (keyboard_check_released(vk_space));
+	userName = global.userName;
 }
 
 audio_emitter_position(myEmitter, x, y, 0);
@@ -98,34 +101,62 @@ if (state == ""){
 
 #endregion
 
-if (isPlayer){
+var _playerUpdate = function(){
+	
+	var b = buffer_create(64, buffer_grow, 1);
+	buffer_seek(b, buffer_seek_start, 0);
+	buffer_write(b, buffer_u16, 3);
+	buffer_write(b, buffer_u16, myID);
+	buffer_write(b, buffer_u16, sprite_index);
+	buffer_write(b, buffer_u16, image_index);
+	buffer_write(b, buffer_string, state);
+	buffer_write(b, buffer_u16, pressSpace);
+	photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
+	buffer_delete(b)
+	
+}
 	
 	if (state == ""){
-		if (SPACE_PRESSED) && !((sprite_index == sPlayerThrow) && (image_index >= 67)){
+		if (pressSpacePress) && !((sprite_index == sPlayerThrow) && (image_index >= 67)){
 			state = "grab";
 			sprite_index = sPlayerGrab;
 			image_index = 0;
-			photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
-			photon_realtime_player_properties_set_local_i32("image_index", image_index);
+			if (isPlayer){
+				
+				_playerUpdate();
+				
+			}
 		}
 	}
 	
 	if (state == "grab"){
 		
 		if (sprite_index == sPlayerGrab){
-			if (SPACE){
-				if (place_meeting(x+(48*xScale), y, oWaterball)){
+			if (pressSpace){
+				
+				if (isPlayer) && (place_meeting(x+(48*xScale), y, oWaterball)){
 					//at water!
 					if (image_index >= 6){
 						sprite_index = sPlayerThrow;
+						photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+						photon_realtime_player_properties_set_local_i32("image_index", image_index);
 						var _catch = instance_place(x+(48*xScale), y, oWaterball);
 						if (_catch != noone){
 							with(_catch){
 								instance_create_depth(x, y, depth-1, oPickupEffect);
 								audio_play_sound(sfxSelect, 1, false, 0.8,, random_range(1.1, 1.2));
+								
+								var b = buffer_create(64, buffer_grow, 1);
+								buffer_seek(b, buffer_seek_start, 0);
+								buffer_write(b, buffer_u16, 2);
+								buffer_write(b, buffer_u16, myID);
+								photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
+								buffer_delete(b)
+								
 								instance_destroy();
 							}
 						}
+						_playerUpdate();
 					}
 					
 				}else{
@@ -134,57 +165,54 @@ if (isPlayer){
 					
 				}
 			}else{
-				if (image_index > 6){ state = ""; }
+				if (image_index > 6){ state = ""; _playerUpdate(); }
 			}
 		}
 		
 		if (sprite_index == sPlayerThrow){
 			
-			if (SPACE_RELEASED) or (image_index >= 67){
+			if (pressSpaceRelease) or (image_index >= 67){
 				
-				var _index = (image_index - 6) / (66 - 6);	//the longer you hold the higher this is from 0 to 1
-				var _myWater = instance_create_depth(x, y-150, depth-1, oWaterball);
-					_myWater.grav = -14 + (6 * _index);
-					_myWater.spd = (-1.5 + (_index * 10))*xScale;
+				if (isPlayer){
+					var _index = (image_index - 6) / (66 - 6);	//the longer you hold the higher this is from 0 to 1
+					var _myWater = instance_create_depth(x, y-150, depth-1, oWaterball);
+						_myWater.grav = -14 + (6 * _index);
+						_myWater.spd = (-1.5 + (_index * 10))*xScale;
 					
-				var _posGrav = abs(_myWater.grav);
-				var _posSpd = abs(_myWater.spd);
-				var _xScale = 0;
-				if (xScale == -1){ _xScale = 1; }
+					var _posGrav = abs(_myWater.grav);
+					var _posSpd = abs(_myWater.spd);
+					var _xScale = 0;
+					var _myWaterID = irandom(9999999);
+						_myWater.myID = _myWaterID;
 				
-				var b = buffer_create(64, buffer_grow, 1);
-				buffer_seek(b, buffer_seek_start, 0);
-				buffer_write(b, buffer_u16, 1);
-				buffer_write(b, buffer_u16, x);
-				buffer_write(b, buffer_u16, y-150);
-				buffer_write(b, buffer_u16, _posGrav);
-				buffer_write(b, buffer_u16, _posSpd);
-				buffer_write(b, buffer_u16, _xScale);
-				photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
+					if (xScale == -1){ _xScale = 1; }
+				
+					var b = buffer_create(64, buffer_grow, 1);
+					buffer_seek(b, buffer_seek_start, 0);
+					buffer_write(b, buffer_u16, 1);
+					buffer_write(b, buffer_u16, x);
+					buffer_write(b, buffer_u16, y-150);
+					buffer_write(b, buffer_u16, _posGrav);
+					buffer_write(b, buffer_u16, _posSpd);
+					buffer_write(b, buffer_u16, _xScale);
+					buffer_write(b, buffer_u16, _myWaterID);
+					photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
 	
-				buffer_delete(b)
+					buffer_delete(b)
+				}
 			
 				image_index = 67;
-				photon_realtime_player_properties_set_local_i32("image_index", image_index);
-				
 				state = "";
+				
+				if (isPlayer){
+					_playerUpdate();
+				}
+				
 			}
 			
 		}
 		
 	}
-	
-	
-	if (sprite_index == sPlayerThrow){
-		if (image_index < 30) && (SPACE_RELEASED){
-			
-			
-		}
-		if (image_index >= image_number-2){ sprite_index = sPlayer; animating = false; }
-	}
-	
-
-}
 
 #region angle
 

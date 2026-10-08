@@ -86,6 +86,7 @@ if (room == rmMenu){
 				keyboard_string = "";
 				audio_play_sound(sfxLowThumb, 1, false,,,2);
 				//audio_play_sound(sfxSelect, 1, false,,,random_range(1.3, 1.34));
+				photon_realtime_player_properties_set_local_string("userName", global.userName);
 				menuProgress = 0;
 			}
 			if !(SPACE) && !(keyboard_check_pressed(vk_enter)) && (keyboard_check_pressed(vk_anykey)){
@@ -264,9 +265,34 @@ if (spawnPlayer > 0){
 		
 	}
 }else{
+	
+	if (fastCheck > 0){ fastCheck--; }
+	else{
+		var _count = photon_realtime_get_player_count();
+		for (var i = 0; i < _count; i++){
+			
+			var _nr = photon_realtime_get_player_number_by_index(i);
+			if (_nr != photon_realtime_get_local_player_number()){
+				if (instance_exists(oPlayer)){
+					with(oPlayer){
+						if !(isPlayer) && (myID == _nr){
+
+							//sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
+							//image_index =	photon_realtime_player_properties_get_remote_i32(_nr, "image_index");
+							xScale =	photon_realtime_player_properties_get_remote_i32(_nr, "xScale");
+							//pressSpace =	photon_realtime_player_properties_get_remote_i32(_nr, "pressSpace");
+							//state =	photon_realtime_player_properties_get_remote_i32(_nr, "state");
+
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	if (extraCheck > 0){ extraCheck--; }
 	else{
-		extraCheck = 20;
+		extraCheck = 15;
 		var _count = photon_realtime_get_player_count();
 		for (var i = 0; i < _count; i++){
 			
@@ -276,18 +302,7 @@ if (spawnPlayer > 0){
 					with(oPlayer){
 						if !(isPlayer) && (myID == _nr){
 							xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
-							sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
-							image_index =	photon_realtime_player_properties_get_remote_i32(_nr, "image_index");
-							xScale =	photon_realtime_player_properties_get_remote_i32(_nr, "xScale");
-							/*
-							headAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "headAngle");
-							neckAngle =		photon_realtime_player_properties_get_remote_i32(_nr, "neckAngle");
-							pressSpace =	photon_realtime_player_properties_get_remote_i32(_nr, "pressSpace");
-							pressLeft =		photon_realtime_player_properties_get_remote_i32(_nr, "pressLeft");
-							pressRight =	photon_realtime_player_properties_get_remote_i32(_nr, "pressRight");
-							angleDir =		photon_realtime_player_properties_get_remote_i32(_nr, "angleDir");
-							king =			photon_realtime_player_properties_get_remote_bool(_nr, "king");
-							//*/
+							userName =			photon_realtime_player_properties_get_remote_string(_nr, "userName");
 						}
 					}
 				}
@@ -298,7 +313,7 @@ if (spawnPlayer > 0){
 		with(oPlayer){
 			if (isPlayer){
 				photon_realtime_player_properties_set_local_i32("xx", x);
-				photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+				//photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
 				photon_realtime_player_properties_set_local_i32("xScale", xScale);
 				/*
 				photon_realtime_player_properties_set_local_i32("headAngle", headAngle);
@@ -325,7 +340,9 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 	    buffer_seek(recv, buffer_seek_start, 0);
 		var _what = buffer_read(recv, buffer_u16);
 		
-		if (_what == 0){
+	
+		switch(_what){
+			case 0:
 			//0: SPAWN PLAYER
 		    var _x = buffer_read(recv, buffer_u16);
 		    var _y = buffer_read(recv, buffer_u16);
@@ -335,20 +352,59 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 				_playerSpawn.myID = _myID;
 				_playerSpawn.xxTo = _x;
 				_playerSpawn.isPlayer = false;
-			
-		}else{
+			break;
+
+			case 1:
 			//1: THROW WATER
 			var _x = buffer_read(recv, buffer_u16);
 		    var _y = buffer_read(recv, buffer_u16);
 			var _grav = buffer_read(recv, buffer_u16);
 			var _spd = buffer_read(recv, buffer_u16);
 			var _xScale = buffer_read(recv, buffer_u16);
+			var _myWaterID = buffer_read(recv, buffer_u16);
 			var _realXScale = 1;
 			if (_xScale == 1){ _realXScale = -1; }
 	
 			var _waterSpawn = instance_create_depth(_x,_y, -1,oWaterball)
 				_waterSpawn.grav = -_grav;
 				_waterSpawn.spd = _spd*_realXScale;
+				_waterSpawn.myID = _myWaterID;
+			break;
+			
+			case 2:
+			//2: water got caught
+			if (instance_exists(oWaterball)){
+				var _myWaterID = buffer_read(recv, buffer_u16);
+				with(oWaterball){
+					if (myID == _myWaterID){
+						instance_create_depth(x, y, depth-1, oPickupEffect);
+						instance_destroy();
+					}
+				}
+			}
+			
+			break;
+			
+			case 3:
+			//3: update player stuff
+			
+			var _myID = buffer_read(recv, buffer_u16);
+		    var _sprite_index = buffer_read(recv, buffer_u16);
+			var _image_index = buffer_read(recv, buffer_u16);
+			var _state = buffer_read(recv, buffer_string);
+			var _pressSpace = buffer_read(recv, buffer_u16);
+			
+			with(oPlayer){
+				if !(isPlayer){
+					if (myID == _myID){
+						sprite_index = _sprite_index;
+						image_index = _image_index;
+						state = _state;
+						pressSpace = _pressSpace;
+					}
+				}
+			}
+			break;
 		}
 	}
 

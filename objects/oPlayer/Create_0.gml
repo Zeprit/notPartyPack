@@ -2,6 +2,8 @@ cSpd = 0;
 maxSpd = 3;
 myID = -1;
 
+userName = "";
+
 dragonSpdExtra = 0;
 king = false;
 
@@ -30,6 +32,8 @@ headIndex = 0;
 pressRight = 0;
 pressLeft = 0;
 pressSpace = 0;
+pressSpacePress = 0;
+pressSpaceRelease = 0;
 
 //other player:
 isPlayer = false;

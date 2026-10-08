@@ -76,6 +76,7 @@ roomInfo[2] = new createRoom("Coffee Sip", 4);
 
 game_state = "waiting";
 extraCheck = 10;
+fastCheck = 5;
 raceStartTime = 0;
 timeRemaining = 3000;
 

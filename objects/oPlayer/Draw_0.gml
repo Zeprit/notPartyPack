@@ -5,6 +5,8 @@
 
 draw_sprite_ext(sprite_index, image_index, x, y, (image_xscale + (sin(slowSin)*.016)) * xScale, (image_yscale - (sin(slowSin)*.016)), bodyAngle, image_blend, image_alpha);
 
+var _nameWidth = string_width(userName)*0.5;
+draw_text_transformed_colour(x - (_nameWidth/2), y-240, userName, 0.5, 0.5, 0, c_navy, c_navy, c_navy, c_navy, 0.55);
 /*
 var _headSprite = sPlayerHead;
 if (king){ _headSprite = sPlayerHeadKing; }
