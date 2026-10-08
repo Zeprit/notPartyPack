@@ -1,8 +1,8 @@
 {
   "FolderOrderSettings":[
     {"name":"GM Extensions Assets","order":1,"path":"folders/GM Extensions Assets.yy",},
-    {"name":"objects","order":6,"path":"folders/objects.yy",},
     {"name":"MobileUtils","order":2,"path":"folders/MobileUtils.yy",},
+    {"name":"objects","order":6,"path":"folders/objects.yy",},
     {"name":"Photon Demo","order":3,"path":"folders/Photon Demo.yy",},
     {"name":"Photon","order":4,"path":"folders/Photon.yy",},
     {"name":"rooms","order":12,"path":"folders/rooms.yy",},
@@ -49,5 +49,7 @@
     {"name":"sPlayerThrow","order":4,"path":"sprites/sPlayerThrow/sPlayerThrow.yy",},
     {"name":"sPlayerWalk","order":3,"path":"sprites/sPlayerWalk/sPlayerWalk.yy",},
     {"name":"sPumpkinGrow","order":14,"path":"sprites/sPumpkinGrow/sPumpkinGrow.yy",},
+    {"name":"sWaterdrop","order":15,"path":"sprites/sWaterdrop/sWaterdrop.yy",},
+    {"name":"sWaterSplash","order":16,"path":"sprites/sWaterSplash/sWaterSplash.yy",},
   ],
 }
