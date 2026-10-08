@@ -86,7 +86,7 @@ if (room == rmMenu){
 				keyboard_string = "";
 				audio_play_sound(sfxLowThumb, 1, false,,,2);
 				//audio_play_sound(sfxSelect, 1, false,,,random_range(1.3, 1.34));
-				photon_realtime_player_properties_set_local_string("userName", global.userName);
+				
 				menuProgress = 0;
 			}
 			if !(SPACE) && !(keyboard_check_pressed(vk_enter)) && (keyboard_check_pressed(vk_anykey)){
@@ -192,6 +192,7 @@ if (room == rmMenu){
 						//if we created or joined the room good
 						show_debug_message("...joined room!");
 						menuState = "connect to game";
+						photon_realtime_player_properties_set_local_string("userName", global.userName);
 					
 					}
 				});
@@ -251,6 +252,7 @@ if (spawnPlayer > 0){
 		buffer_write(b, buffer_u16, photon_realtime_player_properties_get_local_i32("xx"));
 		buffer_write(b, buffer_u16, 576);
 		buffer_write(b, buffer_u16, photon_realtime_get_local_player_number());
+		buffer_write(b, buffer_string, global.userName);
 	
 		var _realPlayerX = photon_realtime_player_properties_get_local_i32("xx");
 		var _realPlayer =  instance_create_depth(_realPlayerX, 576, 0, oPlayer);
@@ -269,6 +271,27 @@ if (spawnPlayer > 0){
 	
 	if (fastCheck > 0){ fastCheck--; }
 	else{
+		fastCheck = 3;
+		
+		if (instance_exists(oPlayer)){
+			with(oPlayer){
+				if (isPlayer){
+					photon_realtime_player_properties_set_local_i32("xx", x);
+					photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+					photon_realtime_player_properties_set_local_i32("xScale", xScale);
+					/*
+					photon_realtime_player_properties_set_local_i32("headAngle", headAngle);
+					photon_realtime_player_properties_set_local_i32("neckAngle", neckAngle);
+					photon_realtime_player_properties_set_local_i32("pressSpace", pressSpace);
+					photon_realtime_player_properties_set_local_i32("pressLeft", pressLeft);
+					photon_realtime_player_properties_set_local_i32("pressRight", pressRight);
+					photon_realtime_player_properties_set_local_i32("angleDir", angleDir);
+					//*/
+				}
+			}
+		}
+		
+		
 		var _count = photon_realtime_get_player_count();
 		for (var i = 0; i < _count; i++){
 			
@@ -281,6 +304,7 @@ if (spawnPlayer > 0){
 							//sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
 							//image_index =	photon_realtime_player_properties_get_remote_i32(_nr, "image_index");
 							xScale =	photon_realtime_player_properties_get_remote_i32(_nr, "xScale");
+							sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
 							//pressSpace =	photon_realtime_player_properties_get_remote_i32(_nr, "pressSpace");
 							//state =	photon_realtime_player_properties_get_remote_i32(_nr, "state");
 
@@ -304,29 +328,14 @@ if (spawnPlayer > 0){
 						if !(isPlayer) && (myID == _nr){
 							xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 							userName =			photon_realtime_player_properties_get_remote_string(_nr, "userName");
+							xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 						}
 					}
 				}
 			}
 		}
 	}
-	if (instance_exists(oPlayer)){
-		with(oPlayer){
-			if (isPlayer){
-				photon_realtime_player_properties_set_local_i32("xx", x);
-				//photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
-				photon_realtime_player_properties_set_local_i32("xScale", xScale);
-				/*
-				photon_realtime_player_properties_set_local_i32("headAngle", headAngle);
-				photon_realtime_player_properties_set_local_i32("neckAngle", neckAngle);
-				photon_realtime_player_properties_set_local_i32("pressSpace", pressSpace);
-				photon_realtime_player_properties_set_local_i32("pressLeft", pressLeft);
-				photon_realtime_player_properties_set_local_i32("pressRight", pressRight);
-				photon_realtime_player_properties_set_local_i32("angleDir", angleDir);
-				//*/
-			}
-		}
-	}
+	
 }
 
 //photon_realtime_player_get_name()
@@ -348,11 +357,13 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 		    var _x = buffer_read(recv, buffer_u16);
 		    var _y = buffer_read(recv, buffer_u16);
 			var _myID = buffer_read(recv, buffer_u16);
+			var _userName = buffer_read(recv, buffer_string);
 	
 			var _playerSpawn = instance_create_depth(_x,_y,0,oPlayer)
 				_playerSpawn.myID = _myID;
 				_playerSpawn.xxTo = _x;
 				_playerSpawn.isPlayer = false;
+				_playerSpawn.userName = _userName;
 			break;
 
 			case 1:

@@ -9,6 +9,21 @@ if (isPlayer){
 
 audio_emitter_position(myEmitter, x, y, 0);
 
+var _playerUpdate = function(){
+	
+	var b = buffer_create(64, buffer_grow, 1);
+	buffer_seek(b, buffer_seek_start, 0);
+	buffer_write(b, buffer_u16, 3);
+	buffer_write(b, buffer_u16, myID);
+	buffer_write(b, buffer_u16, sprite_index);
+	buffer_write(b, buffer_u16, image_index);
+	buffer_write(b, buffer_string, state);
+	buffer_write(b, buffer_u16, pressSpace);
+	photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
+	buffer_delete(b)
+	
+}
+
 #region effects
 slowSin += .015;
 
@@ -100,21 +115,6 @@ if (state == ""){
 }
 
 #endregion
-
-var _playerUpdate = function(){
-	
-	var b = buffer_create(64, buffer_grow, 1);
-	buffer_seek(b, buffer_seek_start, 0);
-	buffer_write(b, buffer_u16, 3);
-	buffer_write(b, buffer_u16, myID);
-	buffer_write(b, buffer_u16, sprite_index);
-	buffer_write(b, buffer_u16, image_index);
-	buffer_write(b, buffer_string, state);
-	buffer_write(b, buffer_u16, pressSpace);
-	photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
-	buffer_delete(b)
-	
-}
 	
 	if (state == ""){
 		if (pressSpacePress) && !((sprite_index == sPlayerThrow) && (image_index >= 67)){
@@ -134,7 +134,7 @@ var _playerUpdate = function(){
 		if (sprite_index == sPlayerGrab){
 			if (pressSpace){
 				
-				if (isPlayer) && (place_meeting(x+(48*xScale), y, oWaterball)){
+				if (place_meeting(x+(48*xScale), y, oWaterball)){
 					//at water!
 					if (image_index >= 6){
 						sprite_index = sPlayerThrow;
@@ -146,12 +146,14 @@ var _playerUpdate = function(){
 								instance_create_depth(x, y, depth-1, oPickupEffect);
 								audio_play_sound(sfxSelect, 1, false, 0.8,, random_range(1.1, 1.2));
 								
-								var b = buffer_create(64, buffer_grow, 1);
-								buffer_seek(b, buffer_seek_start, 0);
-								buffer_write(b, buffer_u16, 2);
-								buffer_write(b, buffer_u16, myID);
-								photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
-								buffer_delete(b)
+								if (other.isPlayer){
+									var b = buffer_create(64, buffer_grow, 1);
+									buffer_seek(b, buffer_seek_start, 0);
+									buffer_write(b, buffer_u16, 2);
+									buffer_write(b, buffer_u16, myID);
+									photon_realtime_operation_raise_event_buffer(true, b, buffer_tell(b), 100);
+									buffer_delete(b)
+								}
 								
 								instance_destroy();
 							}
@@ -178,6 +180,10 @@ var _playerUpdate = function(){
 					var _myWater = instance_create_depth(x, y-150, depth-1, oWaterball);
 						_myWater.grav = -14 + (6 * _index);
 						_myWater.spd = (-1.5 + (_index * 10))*xScale;
+					if (image_index >= 64){
+						_myWater.grav = -14 + (10 * _index);
+						_myWater.spd = (-1.5 + (_index * 14))*xScale;
+					}
 					
 					var _posGrav = abs(_myWater.grav);
 					var _posSpd = abs(_myWater.spd);
