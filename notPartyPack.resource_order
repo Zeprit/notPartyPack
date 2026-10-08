@@ -25,6 +25,7 @@
     {"name":"oPlayer","order":3,"path":"objects/oPlayer/oPlayer.yy",},
     {"name":"oTriggerBlock","order":4,"path":"objects/oTriggerBlock/oTriggerBlock.yy",},
     {"name":"oWaterball","order":5,"path":"objects/oWaterball/oWaterball.yy",},
+    {"name":"oWaterSplash","order":8,"path":"objects/oWaterSplash/oWaterSplash.yy",},
     {"name":"rmLevel","order":2,"path":"rooms/rmLevel/rmLevel.yy",},
     {"name":"rmMenu","order":1,"path":"rooms/rmMenu/rmMenu.yy",},
     {"name":"sfxLowThumb","order":1,"path":"sounds/sfxLowThumb/sfxLowThumb.yy",},

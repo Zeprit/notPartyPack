@@ -240,6 +240,7 @@ if (spawnPlayer > 0){
 					_newPlayer.x = photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 					_newPlayer.king = photon_realtime_player_properties_get_remote_bool(_nr, "king");
 					_newPlayer.isPlayer = false;
+					_newPlayer.userName = photon_realtime_player_properties_get_remote_string(_nr, "userName");
 			}
 		}
 		
