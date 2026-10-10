@@ -32,8 +32,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sBall",
-    "path":"sprites/sBall/sBall.yy",
+    "name":"sWaterdrop",
+    "path":"sprites/sWaterdrop/sWaterdrop.yy",
   },
   "spriteMaskId":null,
   "visible":true,
