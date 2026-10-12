@@ -51,7 +51,9 @@ audio_listener_orientation(0, 1, 0, 0, 0, 1);
 
 #endregion
 #region effects
-
+	
+	audio_listener_position(xxt, yyt, 0);
+	
 	#region select
 	
 	for (var i = 0; i < 100; i++){

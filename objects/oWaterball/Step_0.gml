@@ -3,6 +3,8 @@ if (y < 576){
 	
 	y += grav;
 	x += spd;
+	
+	audio_emitter_position(myEmitter, x, y, 0);
 }else{
 	
 	instance_create_depth(x, y, depth, oWaterSplash);
