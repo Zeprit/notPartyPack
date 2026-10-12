@@ -68,6 +68,8 @@ if (isPlayer){
 	x += cSpd;
 }else{
 	x += (xxTo - x) * 0.5;
+	
+	if (point_distance(xprevious, 0, x, 0) > 1.5){ _walkRight = true; }
 }
 
 #endregion
@@ -144,7 +146,7 @@ if (state == ""){
 						if (_catch != noone){
 							with(_catch){
 								instance_create_depth(x, y, depth-1, oPickupEffect);
-								audio_play_sound(sfxSelect, 1, false, 0.8,, random_range(1.1, 1.2));
+								audio_play_sound_on(myEmitter, sfxSelect, false, 1, 0.8,, random_range(1.1, 1.2));
 								
 								if (other.isPlayer){
 									var b = buffer_create(64, buffer_grow, 1);
