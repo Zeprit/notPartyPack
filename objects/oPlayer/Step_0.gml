@@ -11,6 +11,7 @@ audio_emitter_position(myEmitter, x, y, 0);
 
 var _playerUpdate = function(){
 	
+	//show_debug_message("updating player from object!");
 	var b = buffer_create(64, buffer_grow, 1);
 	buffer_seek(b, buffer_seek_start, 0);
 	buffer_write(b, buffer_u16, 3);
@@ -66,11 +67,23 @@ if !(_canWalkLeft) && (x < 20){ if (cSpd < 0){ cSpd = 0; } }
 
 if (isPlayer){
 	x += cSpd;
+	
+	if ((_walkRight) or (_walkLeft)){
+		if !(isWalking){
+			isWalking = true;
+			photon_realtime_player_properties_set_local_bool("isWalking", isWalking);
+		}
+	}else if (isWalking){
+		isWalking = false;
+		photon_realtime_player_properties_set_local_bool("isWalking", isWalking);
+	}
+	
 }else{
 	x += (xxTo - x) * 0.5;
 	
-	if (point_distance(xprevious, 0, x, 0) > 1.5){ _walkRight = true; }
 }
+
+
 
 #endregion
 
@@ -81,7 +94,7 @@ if (state == ""){
 		if (image_index >= image_number-1.5){ sprite_index = sPlayer; image_index = 0;}
 	}
 	
-	if ((_walkRight) or (_walkLeft)){
+	if ((_walkRight) or (_walkLeft)) or (!(isPlayer) && (isWalking)){
 		//if we are walking:
 		slowSin += .015;
 		if (sprite_index == sPlayer) or (sprite_index == sPlayerBlink){ sprite_index = sPlayerWalk; }
@@ -146,7 +159,7 @@ if (state == ""){
 						if (_catch != noone){
 							with(_catch){
 								instance_create_depth(x, y, depth-1, oPickupEffect);
-								audio_play_sound_on(myEmitter, sfxSelect, false, 1, 0.8,, random_range(1.1, 1.2));
+								//audio_play_sound_on(myEmitter, sfxSelect, false, 1, 0.8,, random_range(1.1, 1.2));
 								
 								if (other.isPlayer){
 									var b = buffer_create(64, buffer_grow, 1);

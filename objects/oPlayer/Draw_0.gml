@@ -3,7 +3,9 @@
 
 //draw_sprite_ext(sPlayerNeck, image_index, x + lengthdir_x(128,bodyAngle+90), y + lengthdir_y(128,bodyAngle+90) + (256*(sin(slowSin)*.008)), image_xscale * angleDir, image_yscale, neckAngle + bodyAngle, image_blend, image_alpha);
 
-draw_sprite_ext(sprite_index, image_index, x, y, (image_xscale + (sin(slowSin)*.016)) * xScale, (image_yscale - (sin(slowSin)*.016)), bodyAngle, image_blend, image_alpha);
+if (sprite_exists(sprite_index)){
+	draw_sprite_ext(sprite_index, image_index, x, y, (image_xscale + (sin(slowSin)*.016)) * xScale, (image_yscale - (sin(slowSin)*.016)), bodyAngle, image_blend, image_alpha);
+}
 
 var _nameWidth = string_width(userName)*0.5;
 draw_text_transformed_colour(x - (_nameWidth/2), y-240, userName, 0.5, 0.5, 0, c_navy, c_navy, c_navy, c_navy, 0.55);

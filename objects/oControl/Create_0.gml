@@ -291,13 +291,12 @@ photon_realtime_set_callback_player_properties_change(function(_playerNumber, pr
 		if (instance_exists(oPlayer)){
 			with(oPlayer){
 				if !(isPlayer) && (myID == _playerNumber){
+					
 					if (variable_struct_exists(properties, "xx")){			xxTo =			photon_realtime_player_properties_get_remote_i32(_playerNumber, "xx"); }
-					if (variable_struct_exists(properties, "headAngle")){	headAngle =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "headAngle"); }
-					if (variable_struct_exists(properties, "neckAngle")){	neckAngle =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "neckAngle"); }
 					if (variable_struct_exists(properties, "pressSpace")){	pressSpace =	photon_realtime_player_properties_get_remote_i32(_playerNumber, "pressSpace"); }
-					if (variable_struct_exists(properties, "pressLeft")){	pressLeft =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "pressLeft"); }
-					if (variable_struct_exists(properties, "pressRight")){	pressRight =	photon_realtime_player_properties_get_remote_i32(_playerNumber, "pressRight"); }
-					if (variable_struct_exists(properties, "angleDir")){	angleDir =		photon_realtime_player_properties_get_remote_i32(_playerNumber, "angleDir"); }
+					if (variable_struct_exists(properties, "isWalking")){	isWalking =	photon_realtime_player_properties_get_remote_bool(_playerNumber, "isWalking"); }
+
+					//*/
 				}
 			}
 		}

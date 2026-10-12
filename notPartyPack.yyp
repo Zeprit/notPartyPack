@@ -130,7 +130,7 @@
     {"id":{"name":"spr_gm_button","path":"sprites/spr_gm_button/spr_gm_button.yy",},},
     {"id":{"name":"spr_gm_textbox","path":"sprites/spr_gm_textbox/spr_gm_textbox.yy",},},
     {"id":{"name":"sPumpkinGrow","path":"sprites/sPumpkinGrow/sPumpkinGrow.yy",},},
-    {"id":{"name":"sWaterdrop","path":"sprites/sWaterdrop/sWaterdrop.yy",},},
+    {"id":{"name":"sWaterball","path":"sprites/sWaterball/sWaterball.yy",},},
     {"id":{"name":"sWaterSplash","path":"sprites/sWaterSplash/sWaterSplash.yy",},},
     {"id":{"name":"sWhite","path":"sprites/sWhite/sWhite.yy",},},
   ],

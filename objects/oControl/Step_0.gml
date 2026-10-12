@@ -255,7 +255,7 @@ if (spawnPlayer > 0){
 		buffer_write(b, buffer_string, global.userName);
 	
 		var _realPlayerX = photon_realtime_player_properties_get_local_i32("xx");
-		var _realPlayer =  instance_create_depth(_realPlayerX, 576, 0, oPlayer);
+		var _realPlayer =  instance_create_depth(_realPlayerX, 576, 200, oPlayer);
 			_realPlayer.isPlayer = true;
 			_realPlayer.myID = photon_realtime_get_local_player_number();
 		show_debug_message("spawning player at "+string(_realPlayerX));
@@ -277,7 +277,7 @@ if (spawnPlayer > 0){
 			with(oPlayer){
 				if (isPlayer){
 					photon_realtime_player_properties_set_local_i32("xx", x);
-					photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
+					//photon_realtime_player_properties_set_local_i32("sprite_index", sprite_index);
 					photon_realtime_player_properties_set_local_i32("xScale", xScale);
 					/*
 					photon_realtime_player_properties_set_local_i32("headAngle", headAngle);
@@ -304,7 +304,7 @@ if (spawnPlayer > 0){
 							//sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
 							//image_index =	photon_realtime_player_properties_get_remote_i32(_nr, "image_index");
 							xScale =	photon_realtime_player_properties_get_remote_i32(_nr, "xScale");
-							sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
+							//sprite_index =	photon_realtime_player_properties_get_remote_i32(_nr, "sprite_index");
 							//pressSpace =	photon_realtime_player_properties_get_remote_i32(_nr, "pressSpace");
 							//state =	photon_realtime_player_properties_get_remote_i32(_nr, "state");
 
@@ -328,7 +328,7 @@ if (spawnPlayer > 0){
 						if !(isPlayer) && (myID == _nr){
 							xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 							userName =			photon_realtime_player_properties_get_remote_string(_nr, "userName");
-							xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
+							//xxTo =			photon_realtime_player_properties_get_remote_i32(_nr, "xx");
 						}
 					}
 				}
@@ -359,7 +359,7 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 			var _myID = buffer_read(recv, buffer_u16);
 			var _userName = buffer_read(recv, buffer_string);
 	
-			var _playerSpawn = instance_create_depth(_x,_y,0,oPlayer)
+			var _playerSpawn = instance_create_depth(_x, _y, 200, oPlayer)
 				_playerSpawn.myID = _myID;
 				_playerSpawn.xxTo = _x;
 				_playerSpawn.isPlayer = false;
@@ -399,7 +399,7 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 			
 			case 3:
 			//3: update player stuff
-			
+			//show_debug_message("..received a update player thing!");
 			var _myID = buffer_read(recv, buffer_u16);
 		    var _sprite_index = buffer_read(recv, buffer_u16);
 			var _image_index = buffer_read(recv, buffer_u16);
@@ -409,7 +409,9 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 			with(oPlayer){
 				if !(isPlayer){
 					if (myID == _myID){
-						sprite_index = _sprite_index;
+						if (sprite_exists(_sprite_index)){
+							sprite_index = _sprite_index;
+						}
 						image_index = _image_index;
 						state = _state;
 						pressSpace = _pressSpace;

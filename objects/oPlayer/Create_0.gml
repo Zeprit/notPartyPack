@@ -10,6 +10,7 @@ king = false;
 canBlink = irandom(room_speed*6);
 blinkTime = 0;
 
+isWalking = false;
 
 slowSin = 0;
 state = "";
