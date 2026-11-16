@@ -23,6 +23,7 @@
     {"name":"oPhotonInit","order":1,"path":"objects/oPhotonInit/oPhotonInit.yy",},
     {"name":"oPickupEffect","order":7,"path":"objects/oPickupEffect/oPickupEffect.yy",},
     {"name":"oPlayer","order":3,"path":"objects/oPlayer/oPlayer.yy",},
+    {"name":"oPumpkin","order":9,"path":"objects/oPumpkin/oPumpkin.yy",},
     {"name":"oTriggerBlock","order":4,"path":"objects/oTriggerBlock/oTriggerBlock.yy",},
     {"name":"oWaterball","order":5,"path":"objects/oWaterball/oWaterball.yy",},
     {"name":"oWaterSplash","order":8,"path":"objects/oWaterSplash/oWaterSplash.yy",},

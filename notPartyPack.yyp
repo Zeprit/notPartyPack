@@ -86,6 +86,7 @@
     {"id":{"name":"oPhotonInit","path":"objects/oPhotonInit/oPhotonInit.yy",},},
     {"id":{"name":"oPickupEffect","path":"objects/oPickupEffect/oPickupEffect.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
+    {"id":{"name":"oPumpkin","path":"objects/oPumpkin/oPumpkin.yy",},},
     {"id":{"name":"oStart","path":"objects/oStart/oStart.yy",},},
     {"id":{"name":"oTriggerBlock","path":"objects/oTriggerBlock/oTriggerBlock.yy",},},
     {"id":{"name":"oWaterball","path":"objects/oWaterball/oWaterball.yy",},},

@@ -428,6 +428,12 @@ repeat(photon_realtime_get_buffer_event_queue_count())
 var _me = photon_realtime_get_local_player_number();
 var _master = photon_realtime_get_master_client_number();
 if (_me == _master){
+	if (keyboard_check_pressed(ord("G"))){
+		photon_realtime_room_properties_set_i32("pumpkin", pumpkinProgress+1);
+		pumpkinProgress++;
+	}
+}
+/*
 	
 	if (game_state == "waiting"){
 		if (keyboard_check_pressed(ord("G"))){

@@ -79,6 +79,13 @@ extraCheck = 10;
 fastCheck = 5;
 raceStartTime = 0;
 timeRemaining = 3000;
+pumpkinProgress = 0;
+
+if (photon_realtime_get_master_client_number() == photon_realtime_get_local_player_number()){
+    photon_realtime_room_properties_set_i32("pumpkin", 0);
+}else{
+	//pumpkinProgress = photon_realtime_room_properties_get_i32("pumpkin");
+}
 
 // Every player starts NOT ready
 /*
@@ -217,6 +224,12 @@ photon_realtime_set_callback_room_properties_change(function(properties) {
         // We should update locally, because if we update it ourselves we don't receive the callback.
         func_updated_room(properties.game_state);
     }
+	
+	if (variable_struct_exists(properties, "pumpkin")){
+		pumpkinProgress = properties.pumpkin;
+
+	}
+	
 	if (variable_struct_exists(properties, "raceStartTime")){
         raceStartTime = properties.raceStartTime;
     }

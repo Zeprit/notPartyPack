@@ -9,6 +9,7 @@
     {"name":"inst_5CF02C9B","path":"rooms/rmLevel/rmLevel.yy",},
     {"name":"inst_31A53E8A","path":"rooms/rmLevel/rmLevel.yy",},
     {"name":"inst_167D7876","path":"rooms/rmLevel/rmLevel.yy",},
+    {"name":"inst_2C5212C6","path":"rooms/rmLevel/rmLevel.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -20,7 +21,8 @@
       ],"depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"AssetsFG1","properties":[],"resourceType":"GMRAssetLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"Instances","depth":200,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
         {"$GMRInstance":"v4","%Name":"inst_31A53E8A","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_31A53E8A","objectId":{"name":"oTriggerBlock","path":"objects/oTriggerBlock/oTriggerBlock.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":2.0,"scaleY":1.0,"x":128.0,"y":576.0,},
-        {"$GMRInstance":"v4","%Name":"inst_167D7876","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_167D7876","objectId":{"name":"oFaucet","path":"objects/oFaucet/oFaucet.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1152.0,"y":576.0,},
+        {"$GMRInstance":"v4","%Name":"inst_167D7876","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_167D7876","objectId":{"name":"oFaucet","path":"objects/oFaucet/oFaucet.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1920.0,"y":576.0,},
+        {"$GMRInstance":"v4","%Name":"inst_2C5212C6","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_2C5212C6","objectId":{"name":"oPumpkin","path":"objects/oPumpkin/oPumpkin.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1504.0,"y":576.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRAssetLayer":"","%Name":"Assets_1","assets":[
         {"$GMRSpriteGraphic":"v1","%Name":"graphic_631DA01B","animationSpeed":1.0,"colour":4284199477,"frozen":false,"headPosition":0.0,"ignore":true,"inheritedItemId":null,"inheritItemSettings":false,"name":"graphic_631DA01B","resourceType":"GMRSpriteGraphic","resourceVersion":"2.0","rotation":0.0,"scaleX":49.0,"scaleY":3.5,"spriteId":{"name":"sWhite","path":"sprites/sWhite/sWhite.yy",},"x":-160.0,"y":576.0,},
